@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JotSpot">
-        <activity android:name=".TextEntryActivity"></activity>
+        <activity android:name=".newEntry.TextEntryActivity"></activity>
         <activity android:name=".EntryTypeSelection" />
         <activity android:name=".MainActivity">
             <intent-filter>

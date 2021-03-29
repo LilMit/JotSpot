@@ -1,8 +1,10 @@
-package edu.northeastern.jotspot;
+package edu.northeastern.jotspot.newEntry;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import edu.northeastern.jotspot.R;
 
 public class TextEntryActivity extends AppCompatActivity {
 
