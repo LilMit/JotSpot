@@ -3,16 +3,18 @@ package edu.northeastern.jotspot.db.models;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import java.sql.Timestamp;
 
 @Entity(tableName = "entries")
-public abstract class AbstractEntry {
+public abstract class Entry {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @NonNull
     @ColumnInfo(name= "entryId")
+    @ForeignKey(entity = TextEntry.class, parentColumns = "id", childColumns = "id")
     private int id;
 
     @ColumnInfo(name = "dateCreated")
@@ -21,7 +23,7 @@ public abstract class AbstractEntry {
     @ColumnInfo(name = "entryType")
     private EntryType type;
 
-    public AbstractEntry(Timestamp timestamp, EntryType type) {
+    public Entry(Timestamp timestamp, EntryType type) {
         this.id = id;
         this.timestamp = timestamp;
         this.type = type;
