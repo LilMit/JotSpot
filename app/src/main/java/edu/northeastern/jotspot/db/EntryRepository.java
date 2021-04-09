@@ -26,6 +26,14 @@ public class EntryRepository {
         allEntries = entryDao.getAllEntries();
     }
 
+    public LiveData<List<Entry>> getAllEntries(){
+        return this.allEntries;
+    }
+
+    public MutableLiveData<List<Entry>> getSearchResults(){
+        return this.searchResults;
+    }
+
     private void asyncFinished(List<Entry> results){
         searchResults.setValue(results);
     }
@@ -89,7 +97,7 @@ public class EntryRepository {
         task.execute(id);
     }
 
-    public void findProduct(String date){
+    public void findEntry(String date){
         QueryAsyncTask task = new QueryAsyncTask(entryDao);
         task.delegate = this;
         task.execute(date);
