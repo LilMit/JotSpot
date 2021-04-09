@@ -20,9 +20,15 @@ public interface EntryDao {
     @Query("SELECT * FROM entries WHERE dateCreated = :dateCreated")
     List<Entry> findEntry(Date dateCreated);
 
+//    //TODO: correct so actually finds text of keyword
+//    @Query("SELECT * FROM textEntries WHERE content LIKE '%:keyword%'")
+//    List<Entry> findEntry(String keyword);
+
     @Insert
     void addEntry(Entry entry);
 
     @Query("DELETE from entries WHERE entryId = :id")
     void deleteEntry(int id);
+
+
 }

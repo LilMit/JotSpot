@@ -11,10 +11,9 @@ import java.sql.Timestamp;
 @Entity(tableName = "entries")
 public abstract class Entry {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
     @ColumnInfo(name= "entryId")
-    @ForeignKey(entity = TextEntry.class, parentColumns = "id", childColumns = "id")
     private int id;
 
     @ColumnInfo(name = "dateCreated")

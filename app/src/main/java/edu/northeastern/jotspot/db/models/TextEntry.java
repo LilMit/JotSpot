@@ -3,6 +3,7 @@ package edu.northeastern.jotspot.db.models;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import java.sql.Timestamp;
@@ -10,8 +11,9 @@ import java.sql.Timestamp;
 @Entity(tableName = "textEntries")
 public class TextEntry extends Entry {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @NonNull
+    @ForeignKey(entity = Entry.class, parentColumns = "id", childColumns = "id")
     @ColumnInfo(name="id")
     private int id;
 
