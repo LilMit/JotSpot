@@ -15,9 +15,7 @@ import android.widget.TextView;
 import edu.northeastern.jotspot.R;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link MainFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * This was created by following Chapter 68 of Android Studio 4.1 Development Essentials
  */
 public class MainFragment extends Fragment {
 

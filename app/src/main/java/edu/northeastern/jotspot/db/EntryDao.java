@@ -11,6 +11,9 @@ import java.util.List;
 
 import edu.northeastern.jotspot.db.models.Entry;
 
+/**
+ * This was created by following Chapter 66 of Android Studio 4.1 Development Essentials
+ */
 @Dao
 public interface EntryDao {
 

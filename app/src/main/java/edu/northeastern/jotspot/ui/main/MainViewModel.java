@@ -11,6 +11,9 @@ import java.util.List;
 import edu.northeastern.jotspot.db.EntryRepository;
 import edu.northeastern.jotspot.db.models.Entry;
 
+/**
+ * This was created by following Chapter 68 of Android Studio 4.1 Development Essentials
+ */
 public class MainViewModel extends AndroidViewModel {
     private EntryRepository repository;
     private LiveData<List<Entry>> allEntries;

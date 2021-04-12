@@ -12,6 +12,9 @@ import java.util.List;
 
 import edu.northeastern.jotspot.db.models.Entry;
 
+/**
+ * This was created by following Chapter 68 of Android Studio 4.1 Development Essentials
+ */
 public class EntryListAdapter extends RecyclerView.Adapter<EntryListAdapter.ViewHolder>{
 
     private final int entryItemLayout;
