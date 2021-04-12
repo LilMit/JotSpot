@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import edu.northeastern.jotspot.R;
 import edu.northeastern.jotspot.db.models.Entry;
 
 /**

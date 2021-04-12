@@ -4,15 +4,28 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.Locale;
+
 import edu.northeastern.jotspot.R;
+import edu.northeastern.jotspot.db.models.Entry;
+import edu.northeastern.jotspot.db.models.EntryType;
+import edu.northeastern.jotspot.db.models.TextEntry;
 
 /**
  * This was created by following Chapter 68 of Android Studio 4.1 Development Essentials
@@ -70,7 +83,7 @@ public class MainFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState){
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
@@ -82,13 +95,75 @@ public class MainFragment extends Fragment {
         observerSetup();
         recyclerSetup();
     }
-    private void clearFields(){
+
+    private void clearFields() {
         entryId.setText("");
         entryTimestamp.setText("");
         entryType.setText("");
     }
 
-    private void listenerSetup(){
+    private void listenerSetup() {
+        Button addButton = getView().findViewById(R.id.add_button);
+        Button findButton = getView().findViewById(R.id.search_button);
+        Button deleteButton = getView().findViewById(R.id.delete_button);
 
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String timestamp = entryTimestamp.getText().toString();
+                String type = entryType.getText().toString();
+
+                if (!timestamp.equals("") && !type.equals("")) {
+                    Entry entry = new TextEntry(Timestamp.valueOf(timestamp));
+                    mainViewModel.insertEntry(entry);
+                    clearFields();
+                } else {
+                    entryId.setText("Incomplete information");
+                }
+            }
+        });
+        findButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainViewModel.findEntry(entryTimestamp.getText().toString());
+            }
+        });
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainViewModel.deleteEntry(entryId.getText().toString());
+                clearFields();
+            }
+        });
+
+    }
+
+    private void observerSetup(){
+        mainViewModel.getAllEntries().observe(getViewLifecycleOwner(), new Observer<List<Entry>>() {
+            @Override
+            public void onChanged(List<Entry> entries) {
+                adapter.setEntryList(entries);
+            }
+        });
+        mainViewModel.getSearchResults().observe(getViewLifecycleOwner(), new Observer<List<Entry>>() {
+            @Override
+            public void onChanged(List<Entry> entries) {
+                if (entries.size() > 0){
+                    entryId.setText(String.format(Locale.US, "%d", entries.get(0).getId()));
+                    entryTimestamp.setText(entries.get(0).getTimestamp().toString());
+                    entryType.setText(String.format(Locale.US, "%d", entries.get(0).getType()));
+                } else {
+                    entryId.setText("No matching entries.");
+                }
+            }
+        });
+    }
+
+    private void recyclerSetup(){
+        RecyclerView recyclerView;
+        adapter = new EntryListAdapter(R.layout.entry_list_item);
+        recyclerView=getView().findViewById(R.id.entry_recycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
     }
 }
