@@ -15,8 +15,11 @@
         android:textSize="36sp" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/entry_recycler"
         android:layout_width="match_parent"
-        android:layout_height="529dp"/>
+        android:layout_height="291dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
         android:layout_width="match_parent"
