@@ -45,7 +45,7 @@ public class EntryListAdapter extends RecyclerView.Adapter<EntryListAdapter.View
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int listPosition){
         TextView item = holder.item;
-        item.setText(entryList.get(listPosition).getTimestamp().toString());
+        item.setText(entryList.get(listPosition).getDate().toString());
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

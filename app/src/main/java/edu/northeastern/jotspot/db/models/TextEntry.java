@@ -6,7 +6,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 @Entity(tableName = "textEntries")
 public class TextEntry extends Entry {
@@ -20,7 +20,7 @@ public class TextEntry extends Entry {
     @ColumnInfo(name="content")
     private String content;
 
-    public TextEntry(Timestamp timestamp) {
+    public TextEntry(Date timestamp) {
 
         super(timestamp, EntryType.TEXT);
         this.id = id;
