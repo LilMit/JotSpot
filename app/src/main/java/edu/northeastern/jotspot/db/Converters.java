@@ -4,6 +4,8 @@ import androidx.room.TypeConverter;
 
 import java.sql.Date;
 
+import edu.northeastern.jotspot.db.models.EntryType;
+
 /**
  * Converts Date into usable datatype for Room Database.
  *
@@ -19,6 +21,16 @@ public class Converters {
     @TypeConverter
     public static Long dateToTimestamp(Date date) {
         return date == null ? null : date.getTime();
+    }
+
+    @TypeConverter
+    public static String fromEntryType(EntryType type) {
+        return type == null ? null : type.toString();
+    }
+
+    @TypeConverter
+    public static EntryType stringToEntryType(String type) {
+        return type == null ? null : EntryType.valueOf(type);
     }
 
 }

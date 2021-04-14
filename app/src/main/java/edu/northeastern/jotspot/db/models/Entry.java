@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 import java.sql.Date;
 
 @Entity(tableName = "entries")
-public abstract class Entry {
+public class Entry {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
