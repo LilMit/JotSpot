@@ -24,8 +24,13 @@ public class TextEntry extends Entry {
 
         super(timestamp, EntryType.TEXT);
         this.id = id;
+    }
+
+    public TextEntry(Date timestamp, String content) {
+
+        super(timestamp, EntryType.TEXT);
+        this.id = id;
         this.content = content;
-        super.setId(id);
     }
 
     @Override

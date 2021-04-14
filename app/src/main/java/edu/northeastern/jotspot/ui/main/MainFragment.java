@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -90,9 +91,9 @@ public class MainFragment extends Fragment {
 //    }
 
     private void listenerSetup() {
-        Button addButton = getView().findViewById(R.id.add_button);
-        Button findButton = getView().findViewById(R.id.search_button);
-        Button deleteButton = getView().findViewById(R.id.delete_button);
+        ImageButton addButton = getView().findViewById(R.id.add_button);
+        ImageButton findButton = getView().findViewById(R.id.search_button);
+        ImageButton deleteButton = getView().findViewById(R.id.delete_button);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
