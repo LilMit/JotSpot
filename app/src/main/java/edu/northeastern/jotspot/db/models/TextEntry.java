@@ -12,8 +12,8 @@ import java.sql.Date;
 public class TextEntry extends Entry {
 
     @NonNull
-    @ForeignKey(entity = Entry.class, parentColumns = "id", childColumns = "id")
-    @ColumnInfo(name="id")
+    @ForeignKey(entity = Entry.class, parentColumns = "entryId", childColumns = "entryId")
+    @ColumnInfo(name="entryId")
     private int id;
 
     @ColumnInfo(name="content")
