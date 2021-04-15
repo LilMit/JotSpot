@@ -11,7 +11,6 @@ import java.sql.Date;
 @Entity(tableName = "textEntries")
 public class TextEntry extends Entry {
 
-    @PrimaryKey
     @NonNull
     @ForeignKey(entity = Entry.class, parentColumns = "id", childColumns = "id")
     @ColumnInfo(name="id")
@@ -21,17 +20,15 @@ public class TextEntry extends Entry {
     private String content;
 
     public TextEntry(Date timestamp) {
-
         super(timestamp, EntryType.TEXT);
-        this.id = id;
     }
 
     public TextEntry(Date timestamp, String content) {
-
         super(timestamp, EntryType.TEXT);
-        this.id = id;
         this.content = content;
     }
+
+    public TextEntry(){}
 
     @Override
     public int getId() {

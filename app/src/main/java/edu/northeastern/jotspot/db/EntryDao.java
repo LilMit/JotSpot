@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.util.List;
 
 import edu.northeastern.jotspot.db.models.Entry;
+import edu.northeastern.jotspot.db.models.TextEntry;
 
 /**
  * This was created by following Chapter 66 of Android Studio 4.1 Development Essentials
@@ -29,6 +30,9 @@ public interface EntryDao {
 
     @Insert
     void addEntry(Entry entry);
+
+    @Insert
+    void addTextEntry(TextEntry entry);
 
     @Query("DELETE from entries WHERE entryId = :id")
     void deleteEntry(int id);

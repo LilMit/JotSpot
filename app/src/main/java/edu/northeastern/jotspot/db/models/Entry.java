@@ -21,6 +21,8 @@ public class Entry {
     @ColumnInfo(name = "entryType")
     private EntryType type;
 
+    public Entry(){}
+
     public Entry(Date date, EntryType type) {
         this.id = id;
         this.date = date;
