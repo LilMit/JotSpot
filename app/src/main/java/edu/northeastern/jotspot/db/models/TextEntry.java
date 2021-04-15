@@ -11,11 +11,6 @@ import java.sql.Date;
 @Entity(tableName = "textEntries")
 public class TextEntry extends Entry {
 
-    @NonNull
-    @ForeignKey(entity = Entry.class, parentColumns = "entryId", childColumns = "entryId")
-    @ColumnInfo(name="entryId")
-    private int id;
-
     @ColumnInfo(name="content")
     private String content;
 
@@ -30,15 +25,15 @@ public class TextEntry extends Entry {
 
     public TextEntry(){}
 
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(@NonNull int id) {
-        this.id = id;
-    }
+//    @Override
+//    public int getId() {
+//        return id;
+//    }
+//
+//    @Override
+//    public void setId(@NonNull int id) {
+//        this.id = id;
+//    }
 
     public String getContent() {
         return content;
