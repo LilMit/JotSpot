@@ -1,0 +1,90 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 3,
+    "identityHash": "93dc8e71150006b404064000d1061e20",
+    "entities": [
+      {
+        "tableName": "entries",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`entryId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `dateCreated` INTEGER, `entryType` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "entryId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "dateCreated",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "entryType",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "entryId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "textEntries",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`entryId` INTEGER NOT NULL, `content` TEXT, `entryId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `dateCreated` INTEGER, `entryType` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "entryId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "entryId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "dateCreated",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "entryType",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "entryId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '93dc8e71150006b404064000d1061e20')"
+    ]
+  }
+}
