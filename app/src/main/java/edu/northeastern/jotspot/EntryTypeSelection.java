@@ -24,6 +24,7 @@ public class EntryTypeSelection extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(EntryTypeSelection.this, TextEntryActivity.class);
                 startActivity(i);
+                finish();
             }
         });
     }
