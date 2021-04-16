@@ -12,6 +12,7 @@ import java.util.List;
 
 import edu.northeastern.jotspot.R;
 import edu.northeastern.jotspot.db.models.Entry;
+import edu.northeastern.jotspot.db.models.EntryType;
 
 /**
  * This was created by following Chapter 68 of Android Studio 4.1 Development Essentials
@@ -44,15 +45,25 @@ public class EntryListAdapter extends RecyclerView.Adapter<EntryListAdapter.View
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int listPosition){
-        TextView item = holder.item;
-        item.setText(entryList.get(listPosition).getDate().toString());
+        TextView date = holder.timestamp;
+        TextView content = holder.content;
+        Entry item = entryList.get(listPosition);
+        EntryType type = item.getType();
+        if (type.equals(EntryType.TEXT)){
+            content.setText(item.getContent());
+        } else {
+            content.setText(item.getType().toString());
+        }
+        date.setText(item.getDate().toString());
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView item;
+        TextView timestamp;
+        TextView content;
         ViewHolder(View itemView){
             super(itemView);
-            item = itemView.findViewById(R.id.entry_row);
+            timestamp = itemView.findViewById(R.id.entry_timestamp);
+            content = itemView.findViewById(R.id.content_text);
         }
     }
 

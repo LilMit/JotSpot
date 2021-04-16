@@ -10,8 +10,6 @@ import java.sql.Date;
 import java.util.List;
 
 import edu.northeastern.jotspot.db.models.Entry;
-import edu.northeastern.jotspot.db.models.EntryType;
-import edu.northeastern.jotspot.db.models.TextEntry;
 
 /**
  * This was created by following Chapter 66 of Android Studio 4.1 Development Essentials
@@ -74,9 +72,9 @@ public class EntryRepository {
         protected Void doInBackground(final Entry... params) {
             Entry entry = params[0];
             asyncTaskDao.addEntry(entry);
-            if (entry.getType()== EntryType.TEXT ){
-                asyncTaskDao.addTextEntry((TextEntry)entry);
-            }
+//            if (entry.getType()== EntryType.TEXT ){
+//                asyncTaskDao.addTextEntry((TextEntry)entry);
+//            }
             return null;
         }
     }

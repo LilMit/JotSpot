@@ -13,23 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.sql.Timestamp;
 import java.util.List;
-import java.util.Locale;
 
 import edu.northeastern.jotspot.EntryTypeSelection;
-import edu.northeastern.jotspot.MainActivity;
 import edu.northeastern.jotspot.R;
 import edu.northeastern.jotspot.db.models.Entry;
-import edu.northeastern.jotspot.db.models.EntryType;
-import edu.northeastern.jotspot.db.models.TextEntry;
 
 /**
  * This was initially created by following Chapter 68 of Android Studio 4.1 Development Essentials then modified
