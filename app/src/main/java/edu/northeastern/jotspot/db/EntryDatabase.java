@@ -8,12 +8,11 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 import edu.northeastern.jotspot.db.models.Entry;
-import edu.northeastern.jotspot.db.models.TextEntry;
 
 /**
  * This was created by following Chapter 66 of Android Studio 4.1 Development Essentials
  */
-@Database(entities = {Entry.class, TextEntry.class}, version=3)
+@Database(entities = {Entry.class}, version=3)
 @TypeConverters({Converters.class})
 public abstract class EntryDatabase extends RoomDatabase {
     public abstract EntryDao entryDao();

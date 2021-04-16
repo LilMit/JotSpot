@@ -21,12 +21,21 @@ public class Entry {
     @ColumnInfo(name = "entryType")
     private EntryType type;
 
+    @ColumnInfo(name = "content")
+    private String content;
+
     public Entry(){}
 
     public Entry(Date date, EntryType type) {
         this.id = id;
         this.date = date;
         this.type = type;
+    }
+
+    public Entry(Date date, EntryType type, String content) {
+        this.date = date;
+        this.type = type;
+        this.content = content;
     }
 
     public int getId() {
@@ -51,5 +60,13 @@ public class Entry {
 
     public EntryType getType() {
         return type;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

@@ -1,6 +1,5 @@
 package edu.northeastern.jotspot.newEntry;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -11,14 +10,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.sql.Date;
-import java.sql.Time;
 import java.time.Instant;
 
 import edu.northeastern.jotspot.R;
-import edu.northeastern.jotspot.db.models.TextEntry;
+import edu.northeastern.jotspot.db.models.Entry;
+import edu.northeastern.jotspot.db.models.EntryType;
 import edu.northeastern.jotspot.ui.main.MainViewModel;
 
 public class TextEntryActivity extends AppCompatActivity {
@@ -43,7 +40,7 @@ public class TextEntryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Date date = new Date(Instant.now().toEpochMilli());
                 String content = contentEditText.getText().toString();
-                TextEntry entry = new TextEntry(date, content);
+                Entry entry = new Entry(date, EntryType.TEXT, content);
                 mainViewModel.insertEntry(entry);
                 finish();
             }
