@@ -21,8 +21,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 
 import edu.northeastern.jotspot.db.models.Entry;
@@ -174,8 +176,18 @@ public class AudioEntryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         startTime = new Date(Instant.now().toEpochMilli());
-        fileName = Environment.getExternalStorageDirectory().getAbsolutePath()
-                + "/audioRecordings/" + startTime.toString() + ".3gp";
+
+        String stamp = new SimpleDateFormat("MM-dd-yyyy_HHmmss").format(startTime);
+        String storageDirectory = Environment.getExternalStorageDirectory().getAbsolutePath();
+        Log.e(LOG_TAG, "StorageDirectory =" + storageDirectory);
+        File audioDirectory = new File(storageDirectory + "/JotSpot/Audio");
+        if(!audioDirectory.exists()){
+            if(!audioDirectory.mkdirs()){
+                Log.e(LOG_TAG, "Failed to create " + audioDirectory.getPath());
+            }
+        }
+
+        fileName = audioDirectory.getAbsolutePath() + stamp + ".3gp";
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
