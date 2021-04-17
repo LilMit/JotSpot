@@ -131,7 +131,7 @@ public class AudioEntryActivity extends AppCompatActivity {
         OnClickListener clicker = new OnClickListener() {
             @Override
             public void onClick(View v) {
-                onRecord(mStartPlaying);
+                onPlay(mStartPlaying);
                 if (mStartPlaying) {
                     setText("Play");
                 } else {
