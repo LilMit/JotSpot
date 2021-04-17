@@ -1,24 +1,33 @@
 package edu.northeastern.jotspot.newEntry;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.time.Instant;
 
-import edu.northeastern.jotspot.R;
+import edu.northeastern.jotspot.db.models.Entry;
+import edu.northeastern.jotspot.db.models.EntryType;
+import edu.northeastern.jotspot.ui.main.MainViewModel;
 
 /**
  * This code is heavily based on MediaRecorder code from Android documentation
@@ -30,11 +39,19 @@ public class AudioEntryActivity extends AppCompatActivity {
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private static String fileName = null;
 
+    private MainViewModel mainViewModel;
+
     private RecordButton recordButton = null;
     private MediaRecorder recorder = null;
 
     private PlayButton playButton = null;
     private MediaPlayer player = null;
+
+    private Button saveButton =null;
+    private Button deleteButton =null;
+
+    private Date startTime = null;
+    private Date endTime = null;
 
     private boolean recordPermissionAccepted = false;
     private String[] permissions = {Manifest.permission.RECORD_AUDIO};
@@ -48,6 +65,7 @@ public class AudioEntryActivity extends AppCompatActivity {
         if (!recordPermissionAccepted) finish();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void onRecord(boolean start) {
         if (start) {
             startRecording();
@@ -80,6 +98,7 @@ public class AudioEntryActivity extends AppCompatActivity {
         player = null;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void startRecording() {
         recorder = new MediaRecorder();
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -92,12 +111,13 @@ public class AudioEntryActivity extends AppCompatActivity {
         } catch (IOException e) {
             Log.e(LOG_TAG, "prepare failed");
         }
-
         recorder.start();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void stopRecording() {
         recorder.stop();
+        endTime = new Date(Instant.now().toEpochMilli());
         recorder.release();
         recorder = null;
     }
@@ -106,6 +126,7 @@ public class AudioEntryActivity extends AppCompatActivity {
         boolean mStartRecording = true;
 
         OnClickListener clicker = new OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 onRecord(mStartRecording);
@@ -148,23 +169,48 @@ public class AudioEntryActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        fileName = getExternalCacheDir().getAbsolutePath();
-        fileName += "audioRecording.3gp";
+        startTime = new Date(Instant.now().toEpochMilli());
+        fileName = Environment.getExternalStorageDirectory().getAbsolutePath()
+                + "/audioRecordings/" + startTime.toString() + ".3gp";
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         LinearLayout ll = new LinearLayout(this);
+
         recordButton = new RecordButton(this);
         ll.addView(recordButton,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
+
         playButton = new PlayButton(this);
         ll.addView(playButton,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
+
+        saveButton = new Button(this);
+        saveButton.setText("Save");
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (endTime == null){
+                    Toast.makeText(AudioEntryActivity.this, "Nothing to save", Toast.LENGTH_LONG).show();
+                } else {
+                    String content = fileName;
+                    Entry entry = new Entry(startTime, EntryType.AUDIO, content);
+                    mainViewModel.insertEntry(entry);
+                    finish();
+                }
+            }
+        });
+        ll.addView(saveButton,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -187,4 +233,5 @@ public class AudioEntryActivity extends AppCompatActivity {
             player = null;
         }
     }
+
 }
