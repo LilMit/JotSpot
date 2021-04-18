@@ -10,16 +10,22 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.northeastern.jotspot.EntryTypeSelection;
+import edu.northeastern.jotspot.MainActivity;
 import edu.northeastern.jotspot.R;
 import edu.northeastern.jotspot.db.models.Entry;
+import edu.northeastern.jotspot.db.models.EntryType;
+import edu.northeastern.jotspot.viewEntry.ViewAudioEntryActivity;
+import edu.northeastern.jotspot.viewEntry.ViewTextEntryActivity;
 
 /**
  * This was initially created by following Chapter 68 of Android Studio 4.1 Development Essentials then modified
@@ -138,9 +144,27 @@ public class MainFragment extends Fragment {
         recyclerView = getView().findViewById(R.id.entry_recycler);
         ItemClickListener itemClickListener = new ItemClickListener() {
             @Override
-            public void onItemClick(int position) {
-                entryList.get(position).onItemClick(position);
-                adapter.notifyItemChanged(position);
+            public void onItemClick(Entry item) {
+                int id = item.getId();
+                EntryType type = item.getType();
+                String content = item.getContent();
+                String date = item.getDate().toString();
+                Intent intent;
+                if (type == EntryType.TEXT) {
+                    intent = new Intent(MainFragment.this.getContext(), ViewTextEntryActivity.class);
+                } else {
+                    intent = new Intent(MainFragment.this.getContext(), ViewAudioEntryActivity.class);
+                }
+//                            Bundle bundle = new Bundle();
+                ArrayList<String> info = new ArrayList<>();
+                info.add(date);
+                info.add(content);
+//                            bundle.putStringArrayList("ENTRY", info);
+                intent.putStringArrayListExtra("ENTRY", info);
+//                            intent.putExtra("CONTENT", content);
+                Log.e("Adapter", "about to start activity");
+                startActivity(intent);
+//                adapter.notifyItemChanged(position);
             }
 
         };

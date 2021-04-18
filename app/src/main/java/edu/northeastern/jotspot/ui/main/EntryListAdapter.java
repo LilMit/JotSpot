@@ -84,26 +84,7 @@ public class EntryListAdapter extends RecyclerView.Adapter<EntryListAdapter.View
                     if (listener != null) {
                         int position = getLayoutPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            Entry item = entryList.get(position);
-                            int id = item.getId();
-                            EntryType type = item.getType();
-                            String content = item.getContent();
-                            String date = item.getDate().toString();
-                            Intent intent;
-                            if (type == EntryType.TEXT) {
-                                intent = new Intent(ViewHolder.this.itemView.getContext(), ViewTextEntryActivity.class);
-                            } else {
-                                intent = new Intent(ViewHolder.this.itemView.getContext(), ViewAudioEntryActivity.class);
-                            }
-//                            Bundle bundle = new Bundle();
-                            ArrayList<String> info = new ArrayList<>();
-                            info.add(date);
-                            info.add(content);
-//                            bundle.putStringArrayList("ENTRY", info);
-                            intent.putStringArrayListExtra("ENTRY", info);
-//                            intent.putExtra("CONTENT", content);
-                            Log.e("Adapter", "about to start activity");
-                            ViewHolder.this.itemView.getContext().startActivity(intent);
+                            listener.onItemClick(entryList.get(position));
                         }
                     } else {
                         Log.e("Adapter", "listener null");
