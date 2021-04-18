@@ -12,6 +12,8 @@
         android:theme="@style/Theme.JotSpot">
         <activity android:name=".newEntry.AudioEntryActivity"></activity>
         <activity android:name=".newEntry.TextEntryActivity" />
+        <activity android:name=".viewEntry.ViewTextEntryActivity" />
+        <activity android:name=".viewEntry.ViewAudioEntryActivity" />
         <activity android:name=".EntryTypeSelection" />
         <activity android:name=".MainActivity">
             <intent-filter>

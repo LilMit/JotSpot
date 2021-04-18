@@ -17,6 +17,7 @@ import edu.northeastern.jotspot.db.models.Entry;
 public class EntryRepository {
 
     private final MutableLiveData<List<Entry>> searchResults = new MutableLiveData<>();
+    private final MutableLiveData<Entry> selectedEntry = new MutableLiveData<>();
 
 
     private EntryDao entryDao;
@@ -36,9 +37,16 @@ public class EntryRepository {
     public MutableLiveData<List<Entry>> getSearchResults(){
         return this.searchResults;
     }
+    public MutableLiveData<Entry> getSelectedEntry(){
+        return this.selectedEntry;
+    }
+
 
     private void asyncFinished(List<Entry> results){
         searchResults.setValue(results);
+    }
+    private void asyncFinishedOne(Entry result){
+        selectedEntry.setValue(result);
     }
 
     private static class QueryAsyncTask extends AsyncTask<String, Void, List<Entry>> {
@@ -51,12 +59,31 @@ public class EntryRepository {
 
         @Override
         protected List<Entry> doInBackground(final String... params) {
-            return asyncTaskDao.findEntry(Date.valueOf(params[0]));
+            return asyncTaskDao.findEntries(Date.valueOf(params[0]));
         }
 
         @Override
         protected void onPostExecute(List<Entry> result){
             delegate.asyncFinished(result);
+        }
+    }
+
+    private static class FindOneAsyncTask extends AsyncTask<String, Void, Entry> {
+        private final EntryDao asyncTaskDao;
+        private EntryRepository delegate = null;
+
+        FindOneAsyncTask(EntryDao dao){
+            asyncTaskDao = dao;
+        }
+
+        @Override
+        protected Entry doInBackground(final String... params) {
+            return asyncTaskDao.findEntry(Integer.parseInt(params[0]));
+        }
+
+        @Override
+        protected void onPostExecute(Entry result){
+            delegate.asyncFinishedOne(result);
         }
     }
 
@@ -72,9 +99,6 @@ public class EntryRepository {
         protected Void doInBackground(final Entry... params) {
             Entry entry = params[0];
             asyncTaskDao.addEntry(entry);
-//            if (entry.getType()== EntryType.TEXT ){
-//                asyncTaskDao.addTextEntry((TextEntry)entry);
-//            }
             return null;
         }
     }
@@ -104,10 +128,16 @@ public class EntryRepository {
         task.execute(id);
     }
 
-    public void findEntry(String date){
+    public void findEntries(String date){
         QueryAsyncTask task = new QueryAsyncTask(entryDao);
         task.delegate = this;
         task.execute(date);
+    }
+
+    public void findEntry(String id){
+        FindOneAsyncTask task = new FindOneAsyncTask(entryDao);
+        task.delegate = this;
+        task.execute(id);
     }
 
 }

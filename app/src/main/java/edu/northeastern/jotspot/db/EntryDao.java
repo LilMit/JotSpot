@@ -20,10 +20,10 @@ public interface EntryDao {
     LiveData<List<Entry>> getAllEntries();
 
     @Query("SELECT * FROM entries WHERE dateCreated = :dateCreated")
-    List<Entry> findEntry(Date dateCreated);
+    List<Entry> findEntries(Date dateCreated);
 
-//    @Query("SELECT * FROM textEntries WHERE entryId== :id")
-//    TextEntry findTextEntry(int id);
+    @Query("SELECT * FROM entries WHERE entryId== :id")
+    Entry findEntry(int id);
 
 //    //TODO: correct so actually finds text of keyword
 //    @Query("SELECT * FROM textEntries WHERE content LIKE '%:keyword%'")

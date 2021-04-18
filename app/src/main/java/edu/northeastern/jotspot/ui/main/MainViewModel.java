@@ -18,31 +18,41 @@ public class MainViewModel extends AndroidViewModel {
     private EntryRepository repository;
     private LiveData<List<Entry>> allEntries;
     private MutableLiveData<List<Entry>> searchResults;
+    private MutableLiveData<Entry> selectedEntry;
 
-    public MainViewModel(Application application){
+    public MainViewModel(Application application) {
         super(application);
-        repository =new EntryRepository(application);
+        repository = new EntryRepository(application);
         allEntries = repository.getAllEntries();
         searchResults = repository.getSearchResults();
+        selectedEntry = repository.getSelectedEntry();
     }
 
-    public LiveData<List<Entry>> getAllEntries(){
+    public LiveData<List<Entry>> getAllEntries() {
         return allEntries;
     }
 
-    public MutableLiveData<List<Entry>> getSearchResults(){
+    public MutableLiveData<List<Entry>> getSearchResults() {
         return searchResults;
     }
 
-    public void insertEntry(Entry entry){
+    public MutableLiveData<Entry> getSelectedEntry() {
+        return selectedEntry;
+    }
+
+    public void insertEntry(Entry entry) {
         repository.insertEntry(entry);
     }
 
-    public void findEntry(String date){
-        repository.findEntry(date);
+    public void findEntries(String date) {
+        repository.findEntries(date);
     }
 
-    public void deleteEntry(String id){
+    public void findEntry(String id) {
+        repository.findEntry(id);
+    }
+
+    public void deleteEntry(String id) {
         repository.deleteEntry(id);
     }
 }
