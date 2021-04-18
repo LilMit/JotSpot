@@ -1,7 +1,7 @@
 package edu.northeastern.jotspot.ui.main;
 
 import android.content.Intent;
-import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.northeastern.jotspot.MainActivity;
 import edu.northeastern.jotspot.R;
 import edu.northeastern.jotspot.db.models.Entry;
 import edu.northeastern.jotspot.db.models.EntryType;
@@ -28,7 +26,7 @@ public class EntryListAdapter extends RecyclerView.Adapter<EntryListAdapter.View
 
     private final int entryItemLayout;
     private List<Entry> entryList;
-    private View.OnClickListener ocListener;
+    private ItemClickListener ocListener;
 
     public EntryListAdapter(int layoutId) {
         entryItemLayout = layoutId;
@@ -39,7 +37,7 @@ public class EntryListAdapter extends RecyclerView.Adapter<EntryListAdapter.View
         notifyDataSetChanged();
     }
 
-    public void setOnItemClickListener(View.OnClickListener listener) {
+    public void setOnItemClickListener(ItemClickListener listener) {
         this.ocListener = listener;
     }
 
@@ -73,7 +71,7 @@ public class EntryListAdapter extends RecyclerView.Adapter<EntryListAdapter.View
         TextView timestamp;
         TextView content;
 
-        ViewHolder(View itemView, final View.OnClickListener listener) {
+        public ViewHolder(View itemView, final ItemClickListener listener) {
             super(itemView);
             timestamp = itemView.findViewById(R.id.entry_timestamp);
             content = itemView.findViewById(R.id.content_text);
@@ -82,6 +80,7 @@ public class EntryListAdapter extends RecyclerView.Adapter<EntryListAdapter.View
 
                 @Override
                 public void onClick(View v) {
+                    Log.e("Adapter", "click detected");
                     if (listener != null) {
                         int position = getLayoutPosition();
                         if (position != RecyclerView.NO_POSITION) {
@@ -103,8 +102,11 @@ public class EntryListAdapter extends RecyclerView.Adapter<EntryListAdapter.View
 //                            bundle.putStringArrayList("ENTRY", info);
                             intent.putStringArrayListExtra("ENTRY", info);
 //                            intent.putExtra("CONTENT", content);
+                            Log.e("Adapter", "about to start activity");
                             ViewHolder.this.itemView.getContext().startActivity(intent);
                         }
+                    } else {
+                        Log.e("Adapter", "listener null");
                     }
                 }
             });

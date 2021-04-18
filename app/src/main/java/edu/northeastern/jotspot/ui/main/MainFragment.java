@@ -92,22 +92,6 @@ public class MainFragment extends Fragment {
                 startActivity(i);
             }
         });
-        //TODO reimplement in textEntryActivity and remove from here
-
-//            @Override
-//            public void onClick(View view) {
-//                String timestamp = entryTimestamp.getText().toString();
-//                String type = entryType.getText().toString();
-//
-//                if (!timestamp.equals("") && !type.equals("")) {
-//                    Entry entry = new TextEntry(Timestamp.valueOf(timestamp));
-//                    mainViewModel.insertEntry(entry);
-//                    clearFields();
-//                } else {
-//                    entryId.setText("Incomplete information");
-//                }
-//            }
-//        });
 
         //TODO reimplement
 //        findButton.setOnClickListener(new View.OnClickListener() {
@@ -152,6 +136,15 @@ public class MainFragment extends Fragment {
         RecyclerView recyclerView;
         adapter = new EntryListAdapter(R.layout.entry_list_item);
         recyclerView = getView().findViewById(R.id.entry_recycler);
+        ItemClickListener itemClickListener = new ItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                entryList.get(position).onItemClick(position);
+                adapter.notifyItemChanged(position);
+            }
+
+        };
+        adapter.setOnItemClickListener(itemClickListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
     }
