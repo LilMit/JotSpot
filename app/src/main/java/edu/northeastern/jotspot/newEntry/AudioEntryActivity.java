@@ -178,7 +178,7 @@ public class AudioEntryActivity extends AppCompatActivity {
         startTime = new Date(Instant.now().toEpochMilli());
 
         String stamp = new SimpleDateFormat("MM-dd-yyyy_HHmmss").format(startTime);
-        String storageDirectory = Environment.getExternalStorageDirectory().getAbsolutePath();
+        String storageDirectory = getApplicationContext().getFilesDir().getAbsolutePath();
         Log.e(LOG_TAG, "StorageDirectory =" + storageDirectory);
         File audioDirectory = new File(storageDirectory + "/JotSpot/Audio");
         if(!audioDirectory.exists()){
