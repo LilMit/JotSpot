@@ -1,6 +1,14 @@
 package edu.northeastern.jotspot.ui.main;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.RemoteInput;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -17,6 +25,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import java.sql.Date;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +46,11 @@ public class MainFragment extends Fragment {
 
     private MainViewModel mainViewModel;
     private EntryListAdapter adapter;
+
+    public static String NOTIFICATION_CHANNEL = "edu.northeastern.jotspot.reminders";
+    NotificationManager notificationManager;
+    private static final int notificationId = 101;
+    private static final String KEY_REMOTE_ENTRY = "key_remote_entry";
 
 //    private TextView entryId;
 //    private TextView entryTimestamp;
@@ -73,13 +88,73 @@ public class MainFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
-//        entryId = getView().findViewById(R.id.entryId);
-//        entryTimestamp = getView().findViewById(R.id.entryTimestamp);
-//        entryType = getView().findViewById(R.id.entryType);
+        notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
 
+        createNotificationChannel(NOTIFICATION_CHANNEL, "JotSpot Reminders",
+                "JotSpot Reminder Channel");
+        sendNotification();
+        handleIntent();
         listenerSetup();
         observerSetup();
         recyclerSetup();
+    }
+
+    protected void createNotificationChannel(String id, String name, String description) {
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+        NotificationChannel channel = new NotificationChannel(id, name, importance);
+
+        channel.setDescription(description);
+        channel.enableLights(true);
+        channel.setLightColor(Color.MAGENTA);
+        channel.enableVibration(true);
+        channel.setVibrationPattern(new long[]{400});
+        notificationManager.createNotificationChannel(channel);
+    }
+
+    public void sendNotification() {
+
+        String channelId = NOTIFICATION_CHANNEL;
+        String replyLabel = "Write your entry here.";
+
+        RemoteInput remoteInput = new RemoteInput.Builder(KEY_REMOTE_ENTRY).setLabel(replyLabel)
+                .build();
+
+        Intent resultIntent = new Intent(getActivity(), EntryTypeSelection.class);
+        Intent entryIntent = new Intent(getActivity(), MainActivity.class);
+
+        PendingIntent pendingIntent = PendingIntent
+                .getActivity(getActivity(), 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        PendingIntent newEntryPendingIntent = PendingIntent.getActivity(getActivity(),0,entryIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        final Icon icon = Icon.createWithResource(getActivity(), R.drawable.ic_launcher_foreground);
+        Notification.Action replyAction = new Notification.Action.Builder(icon, "New Entry",
+                newEntryPendingIntent).addRemoteInput(remoteInput).build();
+
+        Notification notification = new Notification.Builder(getActivity(), channelId)
+                .setContentTitle("JotSpot Reminder").setContentText("Time to write an entry!")
+                .setSmallIcon(R.drawable.ic_launcher_foreground).setChannelId(channelId)
+                .setContentIntent(pendingIntent).addAction(replyAction).build();
+
+        notificationManager.notify(notificationId, notification);
+
+    }
+
+    private void handleIntent(){
+        Intent intent = getActivity().getIntent();
+
+        Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);
+        if (remoteInput !=null){
+            //add to database
+            String inputString = remoteInput.getCharSequence(KEY_REMOTE_ENTRY).toString();
+            Date date = new Date(Instant.now().toEpochMilli());
+            Entry entry = new Entry(date, EntryType.TEXT, inputString);
+            mainViewModel.insertEntry(entry);
+        }
+
+        Notification repliedNotification = new Notification.Builder(getActivity(), NOTIFICATION_CHANNEL).setSmallIcon(R.drawable.ic_launcher_foreground).setContentText("Entry saved.").build();
+
+        notificationManager.notify(notificationId, repliedNotification);
     }
 
 //    private void clearFields() {
