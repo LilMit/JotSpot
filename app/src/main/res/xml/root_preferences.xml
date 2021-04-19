@@ -18,7 +18,7 @@
 
         <SwitchPreferenceCompat
             android:id="@+id/time_switch"
-            app:key="24h"
+            app:key="militaryTime"
             app:summaryOff="@string/time_off"
             app:summaryOn="@string/time_on"
             app:title="@string/time_format" />

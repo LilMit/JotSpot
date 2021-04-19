@@ -173,7 +173,7 @@ public class MainFragment extends Fragment {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), EntryTypeSelection.class);
+                Intent i = new Intent(MainFragment.this.getContext(), EntryTypeSelection.class);
                 startActivity(i);
             }
         });
@@ -183,7 +183,7 @@ public class MainFragment extends Fragment {
         preferencesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), SettingsActivity.class);
+                Intent i = new Intent(MainFragment.this.getContext(), SettingsActivity.class);
                 startActivity(i);
             }
         });
