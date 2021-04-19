@@ -38,7 +38,6 @@ public class ViewTextEntryActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         ArrayList<String> entry = extras.getStringArrayList("ENTRY");
         date.setText(entry.get(0));
-        //startTime = Date.valueOf(entry.get(0));
         content.setText(entry.get(1));
         //mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
