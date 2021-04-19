@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.List;
 import edu.northeastern.jotspot.EntryTypeSelection;
 import edu.northeastern.jotspot.MainActivity;
 import edu.northeastern.jotspot.R;
+import edu.northeastern.jotspot.SettingsActivity;
 import edu.northeastern.jotspot.db.models.Entry;
 import edu.northeastern.jotspot.db.models.EntryType;
 import edu.northeastern.jotspot.viewEntry.ViewAudioEntryActivity;
@@ -90,11 +92,22 @@ public class MainFragment extends Fragment {
         ImageButton addButton = getView().findViewById(R.id.add_button);
         ImageButton findButton = getView().findViewById(R.id.search_button);
         ImageButton deleteButton = getView().findViewById(R.id.delete_button);
+        ImageButton preferencesButton = getView().findViewById(R.id.preferencesButton);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), EntryTypeSelection.class);
+                startActivity(i);
+            }
+        });
+
+
+
+        preferencesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), SettingsActivity.class);
                 startActivity(i);
             }
         });
