@@ -1,12 +1,12 @@
 <resources>
-    <!-- Reply Preference -->
-    <string-array name="reply_entries">
-        <item>Reply</item>
-        <item>Reply to all</item>
+    <!-- Date Preference -->
+    <string-array name="date_prefs">
+        <item>MM/DD/YYYY</item>
+        <item>DD/MM/YYYY</item>
     </string-array>
 
-    <string-array name="reply_values">
-        <item>reply</item>
-        <item>reply_all</item>
+    <string-array name="date_examples">
+        <item>01/16/2020</item>
+        <item>16/01/2020</item>
     </string-array>
 </resources>

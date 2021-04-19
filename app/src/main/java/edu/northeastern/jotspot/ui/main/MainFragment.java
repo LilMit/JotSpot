@@ -92,8 +92,9 @@ public class MainFragment extends Fragment {
 
         createNotificationChannel(NOTIFICATION_CHANNEL, "JotSpot Reminders",
                 "JotSpot Reminder Channel");
-        sendNotification();
+
         handleIntent();
+        sendNotification();
         listenerSetup();
         observerSetup();
         recyclerSetup();
