@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Notifications">
+
+        <SwitchPreferenceCompat
+            android:id="@+id/notification_switch"
+            android:defaultValue="true"
+            android:key="send_notifications"
+            android:title="@string/notify_switch_label" />
+
+        <edu.northeastern.jotspot.TimePreference
+            android:dependency="send_notifications"
+            android:key="reminder_time"
+            android:summary="Time Summary"
+            android:title="@string/notification_frequency" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

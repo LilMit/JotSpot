@@ -1,30 +1,21 @@
 package edu.northeastern.jotspot;
 
-import android.app.Dialog;
-import android.app.TimePickerDialog;
-import android.content.Context;
-import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.format.DateFormat;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TimePicker;
 
-import androidx.annotation.NonNull;
+//import android.support.v7.preference.PreferenceFragmentCompat;
+
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.preference.DialogPreference;
-import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceDialogFragmentCompat;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.SwitchPreference;
-
-import java.util.Calendar;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -47,9 +38,10 @@ public class SettingsActivity extends AppCompatActivity {
     public static class SettingsFragment extends PreferenceFragmentCompat {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            setPreferencesFromResource(R.xml.root_preferences, rootKey);
-            SwitchPreference sendNotifications = findPreference("send_notifications");
-            TimePreference schedulePreference = findPreference("reminder_time");
+            addPreferencesFromResource(R.xml.app_preferences);
+            //setPreferencesFromResource(R.xml.root_preferences, rootKey);
+//            SwitchPreference sendNotifications = findPreference("send_notifications");
+//            TimePreference schedulePreference = findPreference("reminder_time");
 
             //String scheduleSummaryProvider = Preference.SummaryProvider(preference)
 
@@ -81,72 +73,6 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-
-    /**
-     * I tried figuring out how to implement a time picker in a preference before finally using
-     * https://medium.com/@JakobUlbrich/building-a-settings-screen-for-android-part-3-ae9793fd31ec
-     */
-    public class TimePreference extends DialogPreference implements Preference.OnPreferenceChangeListener {
-        TimePickerDialog picker;
-        private int mTime;
-        private int mDialogLayoutResId = R.layout.pref_time_dialog;
-
-        public TimePreference(Context context) {
-            this(context, null);
-        }
-
-        public TimePreference(Context context, AttributeSet attrs) {
-            super(context, attrs, R.attr.dialogPreferenceStyle);
-        }
-
-        public TimePreference(Context context, AttributeSet attrs,
-                int defStyleAttr) {
-            this(context, attrs, defStyleAttr, defStyleAttr);
-        }
-
-        public TimePreference(Context context, AttributeSet attrs,
-                int defStyleAttr, int defStyleRes) {
-            super(context, attrs, defStyleAttr, defStyleRes);
-
-            // Do custom stuff here
-            // ...
-            // read attributes etc.
-        }
-
-        public int getTime() {
-            return mTime;
-        }
-
-        public void setTime(int time) {
-            mTime = time;    // Save to Shared Preferences
-            persistInt(time);
-        }
-
-        @Override
-        protected Object onGetDefaultValue(TypedArray a, int index) {
-            // Default value from attribute. Fallback value is set to 0.
-            return a.getInt(index, 0);
-        }
-
-        @Override
-        protected void onSetInitialValue(boolean restorePersistedValue,
-                Object defaultValue) {
-            // Read the value. Use the default value if it is not possible.
-            setTime(restorePersistedValue ?
-                    getPersistedInt(mTime) : (int) defaultValue);
-        }
-
-        @Override
-        public int getDialogLayoutResource() {
-            return mDialogLayoutResId;
-        }
-
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            return false;
-        }
-
-    }
 
     public static class TimePreferenceDialogFragmentCompat extends PreferenceDialogFragmentCompat {
         TimePicker mTimePicker;

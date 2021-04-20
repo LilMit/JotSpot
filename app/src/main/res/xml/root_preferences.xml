@@ -8,7 +8,7 @@
             app:key="send_notifications"
             app:title="@string/notify_switch_label" />
 
-        <edu.northeastern.jotspot.SettingsActivity.TimePreference
+        <edu.northeastern.jotspot.TimePreference
             android:key="reminder_time"
             android:summary="Time Summary"
             android:title="@string/notification_frequency"
