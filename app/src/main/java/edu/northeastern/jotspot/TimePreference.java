@@ -1,6 +1,5 @@
 package edu.northeastern.jotspot;
 
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -13,7 +12,6 @@ import androidx.preference.Preference;
  * https://medium.com/@JakobUlbrich/building-a-settings-screen-for-android-part-3-ae9793fd31ec
  */
 public class TimePreference extends DialogPreference implements Preference.OnPreferenceChangeListener {
-    TimePickerDialog picker;
     private int mTime;
     private int mDialogLayoutResId = R.layout.pref_time_dialog;
 

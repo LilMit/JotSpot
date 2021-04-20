@@ -1,6 +1,6 @@
 package edu.northeastern.jotspot;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
 
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -8,7 +8,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.RemoteInput;
-import android.app.TimePickerDialog;
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -16,37 +16,31 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.Icon;
-import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.TimePicker;
 
 import java.util.Calendar;
 
-import edu.northeastern.jotspot.ui.main.MainFragment;
+public class NotificationService extends Service {
 
-public class ScheduleNotificationActivity extends AppCompatActivity {
-
-    private final String TAG  = "ScheduleActivity";
+    private static final String TAG  = "Notification Service";
     public static String NOTIFICATION_CHANNEL = "edu.northeastern.jotspot.reminders";
     public static NotificationManager notificationManager;
     private static final int notificationId = 101;
     private static final String KEY_REMOTE_ENTRY = "key_remote_entry";
     private static final int ALARM_REQUEST_CODE = 0;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_schedule_notification);
-        notificationManager = (NotificationManager) this
-                .getSystemService(Context.NOTIFICATION_SERVICE);
+//    @Override
+//    public void onCreate() {
+//        super.onCreate();
+//        notificationManager = (NotificationManager) this
+//                .getSystemService(Context.NOTIFICATION_SERVICE);
+//        createNotificationChannel(NOTIFICATION_CHANNEL, "JotSpot Reminders",
+//                "JotSpot Reminder Channel");
+//        //scheduleNotification(hour, min);
+//    }
 
-        createNotificationChannel(NOTIFICATION_CHANNEL, "JotSpot Reminders",
-                "JotSpot Reminder Channel");
-    }
-
-    protected void createNotificationChannel(String id, String name, String description) {
+    protected static void createNotificationChannel(String id, String name, String description) {
         int importance = NotificationManager.IMPORTANCE_HIGH;
         NotificationChannel channel = new NotificationChannel(id, name, importance);
 
@@ -59,13 +53,18 @@ public class ScheduleNotificationActivity extends AppCompatActivity {
     }
 
     // sample code from docs https://developer.android.com/training/scheduling/alarms
-    public void scheduleNotification(int hour, int min) {
+    public static void scheduleNotification(Context context, int hour, int min) {
+        Log.e(TAG, "scheduling notification for"+hour +":" +min);
+        notificationManager = (NotificationManager) context
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        createNotificationChannel(NOTIFICATION_CHANNEL, "JotSpot Reminders",
+                "JotSpot Reminder Channel");
         AlarmManager alarmMgr;
         PendingIntent alarmIntent;
 
-        alarmMgr = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        alarmIntent = PendingIntent.getBroadcast(this, ALARM_REQUEST_CODE, intent, 0);
+        alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        alarmIntent = PendingIntent.getBroadcast(context, ALARM_REQUEST_CODE, intent, 0);
 
 // Set the alarm to start at hour, min
         Calendar calendar = Calendar.getInstance();
@@ -74,21 +73,21 @@ public class ScheduleNotificationActivity extends AppCompatActivity {
         calendar.set(Calendar.MINUTE, min);
 
         // cancel already scheduled reminders
-        cancelReminder(this, AlarmReceiver.class);
+        cancelReminder(context, AlarmReceiver.class);
         // delete prior schedule
         if (calendar.before(calendar))
             calendar.add(Calendar.DATE, 1);
 
-        ComponentName receiver = new ComponentName(this, AlarmReceiver.class);
+        ComponentName receiver = new ComponentName(context, AlarmReceiver.class);
 
-        PackageManager pm = this.getPackageManager();
+        PackageManager pm = context.getPackageManager();
         pm.setComponentEnabledSetting(receiver,
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP);
 
         alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, alarmIntent);
-
+        Log.e(TAG, "scheduled notification");
 
     }
 
@@ -111,6 +110,12 @@ public class ScheduleNotificationActivity extends AppCompatActivity {
         am.cancel(pendingIntent);
         pendingIntent.cancel();
 
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 
     public static class AlarmReceiver extends BroadcastReceiver {

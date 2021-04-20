@@ -12,8 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JotSpot">
-        <activity android:name=".ScheduleNotificationActivity"></activity>
-        <receiver android:name=".ScheduleNotificationActivity$AlarmReceiver"/>
+        <activity android:name=".NotificationService"></activity>
+        <receiver android:name=".NotificationService$AlarmReceiver"/>
 
         <activity
             android:name=".SettingsActivity"

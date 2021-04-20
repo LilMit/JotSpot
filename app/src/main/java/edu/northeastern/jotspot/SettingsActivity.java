@@ -6,9 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TimePicker;
 
-//import android.support.v7.preference.PreferenceFragmentCompat;
-
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -39,12 +36,6 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             addPreferencesFromResource(R.xml.app_preferences);
-            //setPreferencesFromResource(R.xml.root_preferences, rootKey);
-//            SwitchPreference sendNotifications = findPreference("send_notifications");
-//            TimePreference schedulePreference = findPreference("reminder_time");
-
-            //String scheduleSummaryProvider = Preference.SummaryProvider(preference)
-
         }
         @Override
         public void onDisplayPreferenceDialog(Preference preference) {
@@ -58,7 +49,7 @@ public class SettingsActivity extends AppCompatActivity {
                         .newInstance(preference.getKey());
             }
 
-            // If it was one of our cutom Preferences, show its dialog
+            // If it was one of our custom Preferences, show its dialog
             if (dialogFragment != null) {
                 Log.e("Settings", "trying to show dialog");
                 dialogFragment.setTargetFragment(this, 0);
@@ -136,6 +127,7 @@ public class SettingsActivity extends AppCompatActivity {
                             minutesAfterMidnight)) {
                         // Save the value
                         timePreference.setTime(minutesAfterMidnight);
+                        NotificationService.scheduleNotification(getContext(),hours,minutes);
                     }
                 }
             }
