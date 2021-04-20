@@ -114,36 +114,34 @@ public class MainFragment extends Fragment {
         notificationManager.createNotificationChannel(channel);
     }
 
-    // sample code from docs https://developer.android.com/training/scheduling/alarms
-    public void scheduleNotification(int hour, int min){
-        AlarmManager alarmMgr;
-        PendingIntent alarmIntent;
-
-        alarmMgr = (AlarmManager)getContext().getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(getContext(), AlarmReceiver.class);
-        alarmIntent = PendingIntent.getBroadcast(getContext(), 0, intent, 0);
-
-// Set the alarm to start at hour, min
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
-        calendar.set(Calendar.MINUTE, min);
-
-// setRepeating() lets you specify a precise custom interval--in this case,
-// 24h.
-        alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                AlarmManager.INTERVAL_DAY, alarmIntent);
-
-
-    }
-
-    public class AlarmReceiver extends BroadcastReceiver {
-        String TAG = "AlarmReceiver";
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            sendNotification();
-        }
-    }
+//    // sample code from docs https://developer.android.com/training/scheduling/alarms
+//    public void scheduleNotification(int hour, int min){
+//        AlarmManager alarmMgr;
+//        PendingIntent alarmIntent;
+//
+//        alarmMgr = (AlarmManager)getContext().getSystemService(Context.ALARM_SERVICE);
+//        Intent intent = new Intent(getContext(), AlarmReceiver.class);
+//        alarmIntent = PendingIntent.getBroadcast(getContext(), 0, intent, 0);
+//
+//// Set the alarm to start at hour, min
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTimeInMillis(System.currentTimeMillis());
+//        calendar.set(Calendar.HOUR_OF_DAY, hour);
+//        calendar.set(Calendar.MINUTE, min);
+//
+//        alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+//                AlarmManager.INTERVAL_DAY, alarmIntent);
+//
+//
+//    }
+//
+//    public class AlarmReceiver extends BroadcastReceiver {
+//        String TAG = "AlarmReceiver";
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            sendNotification();
+//        }
+//    }
 
     public void sendNotification() {
 
