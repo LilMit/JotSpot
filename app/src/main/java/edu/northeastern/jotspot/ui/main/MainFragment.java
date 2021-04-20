@@ -1,10 +1,12 @@
 package edu.northeastern.jotspot.ui.main;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.RemoteInput;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -22,12 +24,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import java.sql.Date;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import edu.northeastern.jotspot.EntryTypeSelection;
@@ -112,6 +114,37 @@ public class MainFragment extends Fragment {
         notificationManager.createNotificationChannel(channel);
     }
 
+    // sample code from docs https://developer.android.com/training/scheduling/alarms
+    public void scheduleNotification(int hour, int min){
+        AlarmManager alarmMgr;
+        PendingIntent alarmIntent;
+
+        alarmMgr = (AlarmManager)getContext().getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(getContext(), AlarmReceiver.class);
+        alarmIntent = PendingIntent.getBroadcast(getContext(), 0, intent, 0);
+
+// Set the alarm to start at hour, min
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, min);
+
+// setRepeating() lets you specify a precise custom interval--in this case,
+// 24h.
+        alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY, alarmIntent);
+
+
+    }
+
+    public class AlarmReceiver extends BroadcastReceiver {
+        String TAG = "AlarmReceiver";
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            sendNotification();
+        }
+    }
+
     public void sendNotification() {
 
         String channelId = NOTIFICATION_CHANNEL;
@@ -128,13 +161,13 @@ public class MainFragment extends Fragment {
 
         PendingIntent newEntryPendingIntent = PendingIntent.getActivity(getActivity(),0,entryIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        final Icon icon = Icon.createWithResource(getActivity(), R.drawable.ic_launcher_foreground);
+        final Icon icon = Icon.createWithResource(getActivity(), R.mipmap.ic_launcher);
         Notification.Action replyAction = new Notification.Action.Builder(icon, "New Entry",
                 newEntryPendingIntent).addRemoteInput(remoteInput).build();
 
         Notification notification = new Notification.Builder(getActivity(), channelId)
                 .setContentTitle("JotSpot Reminder").setContentText("Time to write an entry!")
-                .setSmallIcon(R.drawable.ic_launcher_foreground).setChannelId(channelId)
+                .setSmallIcon(R.mipmap.ic_launcher).setChannelId(channelId)
                 .setContentIntent(pendingIntent).addAction(replyAction).build();
 
         notificationManager.notify(notificationId, notification);
