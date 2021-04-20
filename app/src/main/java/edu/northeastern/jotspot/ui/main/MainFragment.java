@@ -35,6 +35,7 @@ import java.util.List;
 import edu.northeastern.jotspot.EntryTypeSelection;
 import edu.northeastern.jotspot.MainActivity;
 import edu.northeastern.jotspot.R;
+import edu.northeastern.jotspot.ScheduleNotificationActivity;
 import edu.northeastern.jotspot.SettingsActivity;
 import edu.northeastern.jotspot.db.models.Entry;
 import edu.northeastern.jotspot.db.models.EntryType;
@@ -90,13 +91,13 @@ public class MainFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
-        notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-
-        createNotificationChannel(NOTIFICATION_CHANNEL, "JotSpot Reminders",
-                "JotSpot Reminder Channel");
-
-        handleIntent();
-        sendNotification();
+//        notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+//
+//        createNotificationChannel(NOTIFICATION_CHANNEL, "JotSpot Reminders",
+//                "JotSpot Reminder Channel");
+//
+//        handleIntent();
+//        sendNotification();
         listenerSetup();
         observerSetup();
         recyclerSetup();
@@ -209,15 +210,21 @@ public class MainFragment extends Fragment {
             }
         });
 
-
-
         preferencesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainFragment.this.getContext(), SettingsActivity.class);
+                Intent i = new Intent(MainFragment.this.getContext(), ScheduleNotificationActivity.class);
                 startActivity(i);
             }
         });
+
+//        preferencesButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(MainFragment.this.getContext(), SettingsActivity.class);
+//                startActivity(i);
+//            }
+//        });
 
         //TODO reimplement
 //        findButton.setOnClickListener(new View.OnClickListener() {

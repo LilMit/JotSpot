@@ -8,6 +8,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.RemoteInput;
+import android.app.TimePickerDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -16,6 +17,10 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TimePicker;
 
 import java.util.Calendar;
 
@@ -23,6 +28,7 @@ import edu.northeastern.jotspot.ui.main.MainFragment;
 
 public class ScheduleNotificationActivity extends AppCompatActivity {
 
+    private final String TAG  = "ScheduleActivity";
     public static String NOTIFICATION_CHANNEL = "edu.northeastern.jotspot.reminders";
     public static NotificationManager notificationManager;
     private static final int notificationId = 101;

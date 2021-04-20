@@ -7,30 +7,6 @@
             android:id="@+id/notification_switch"
             app:key="send_notifications"
             app:title="@string/notify_switch_label" />
-        <MultiSelectListPreference
-            android:defaultValue="true"
-            android:entries="@array/day_prefs"
-            android:entryValues="@array/day_prefs"
-            android:key="day_pref"
-            android:title="Every" />
-        <ListPreference
-            android:defaultValue="1"
-            android:entries="@array/hour_prefs"
-            android:entryValues="@array/hour_prefs"
-            android:key="reminderHour"
-            android:title="Hour" />
-        <ListPreference
-            android:defaultValue="1"
-            android:entries="@array/minute_prefs"
-            android:entryValues="@array/minute_prefs"
-            android:key="reminderMinutesPref"
-            android:title="Minutes" />
-        <ListPreference
-            android:defaultValue="false"
-            android:entries="@array/am_pm_prefs"
-            android:entryValues="@array/am_pm_prefs"
-            android:key="am_pm"
-            android:title="AM/PM" />
 
     </PreferenceCategory>
 
