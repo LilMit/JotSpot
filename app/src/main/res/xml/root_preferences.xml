@@ -8,6 +8,13 @@
             app:key="send_notifications"
             app:title="@string/notify_switch_label" />
 
+        <DialogPreferenceCompat
+            android:id="@+id/reminder_time"
+            app:key="reminder_time"
+            app:title="@string/notification_frequency"
+            app:useSimpleSummaryProvider="true"
+            app:dependency="send_notifications"/>
+
     </PreferenceCategory>
 
 </PreferenceScreen>

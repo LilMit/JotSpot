@@ -2,9 +2,12 @@ package edu.northeastern.jotspot;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.format.DateFormat;
+import android.util.AttributeSet;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
@@ -12,7 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import androidx.preference.DialogPreference;
 import androidx.preference.EditTextPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreference;
 
@@ -41,20 +46,38 @@ public class SettingsActivity extends AppCompatActivity {
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
             SwitchPreference sendNotifications = findPreference("send_notifications");
+            DialogPreference schedulePreference = findPreference("reminder_time");
 
-            EditTextPreference schedulePreference = findPreference("schedule");
+            //String scheduleSummaryProvider = Preference.SummaryProvider(preference)
 
-            if (schedulePreference != null) {
-                schedulePreference.setOnBindEditTextListener(
-                        new EditTextPreference.OnBindEditTextListener() {
-                            @Override
-                            public void onBindEditText(@NonNull EditText editText) {
-                                editText.setInputType(InputType.TYPE_CLASS_DATETIME);
-                            }
-                        });
-            }
+//            if (schedulePreference != null) {
+//                schedulePreference.setOnBindEditTextListener(
+//                        new EditTextPreference.OnBindEditTextListener() {
+//                            @Override
+//                            public void onBindEditText(@NonNull EditText editText) {
+//                                editText.setInputType(InputType.TYPE_CLASS_DATETIME);
+//                            }
+//                        });
+//            }
 
         }
+    }
+    public class TimePreference extends DialogPreference implements Preference.OnPreferenceChangeListener{
+        TimePickerDialog picker;
+
+        public TimePreference(Context context, AttributeSet attrs) {
+            super(context, attrs, 0);
+            this.setOnPreferenceChangeListener(this);
+        }
+
+
+
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            return false;
+        }
+
+
     }
 
     // based on sample code from https://developer.android.com/guide/topics/ui/controls/pickers
