@@ -8,12 +8,18 @@
             app:key="send_notifications"
             app:title="@string/notify_switch_label" />
 
-        <DialogPreferenceCompat
-            android:id="@+id/reminder_time"
-            app:key="reminder_time"
-            app:title="@string/notification_frequency"
-            app:useSimpleSummaryProvider="true"
-            app:dependency="send_notifications"/>
+        <edu.northeastern.jotspot.SettingsActivity.TimePreference
+            android:key="reminder_time"
+            android:summary="Time Summary"
+            android:title="@string/notification_frequency"
+            app:dependency="send_notifications" />
+
+<!--        <DialogPreferenceCompat-->
+<!--            android:id="@+id/reminder_time"-->
+<!--            app:key="reminder_time"-->
+<!--            app:title="@string/notification_frequency"-->
+<!--            app:useSimpleSummaryProvider="true"-->
+<!--            app:dependency="send_notifications"/>-->
 
     </PreferenceCategory>
 
