@@ -47,10 +47,12 @@ import edu.northeastern.jotspot.viewEntry.ViewTextEntryActivity;
  */
 public class MainFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
+
     private MainViewModel mainViewModel;
     private EntryListAdapter adapter;
 
     public static String NOTIFICATION_CHANNEL = "edu.northeastern.jotspot.reminders";
+    public static String TAG = "MainFragment";
     NotificationManager notificationManager;
     private static final int notificationId = 101;
     private static final String KEY_REMOTE_ENTRY = "key_remote_entry";
@@ -137,7 +139,8 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Date date = new Date(year,month+1,dayOfMonth);
+        Date date = new Date(year-1900,month,dayOfMonth);
+        Log.e(TAG, "searching for entries from date " + date);
         mainViewModel.findEntries(String.valueOf(date));
     }
 
@@ -204,12 +207,13 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
                 adapter.setEntryList(entries);
             }
         });
-        //TODO reimplement in search later
+
         mainViewModel.getSearchResults().observe(getViewLifecycleOwner(), new
         Observer<List<Entry>>() {
             @Override
             public void onChanged(List<Entry> entries) {
                 if (entries.size() > 0) {
+                    Log.e(TAG, entries.size() +" results found, updating view");
                     adapter.setEntryList(entries);
                 } else {
                     Toast.makeText(getContext(), "No matching entries found.", Toast.LENGTH_SHORT).show();

@@ -19,8 +19,9 @@ public interface EntryDao {
     @Query("SELECT * FROM entries")
     LiveData<List<Entry>> getAllEntries();
 
-    @Query("SELECT * FROM entries WHERE dateCreated = :dateCreated")
-    List<Entry> findEntries(Date dateCreated);
+    // dateCreated is stored as long representing ms. there are 86400000 ms in a day and the search date is a time at midnight
+    @Query("SELECT * FROM entries WHERE dateCreated BETWEEN :inputDate AND :nextDay")
+    List<Entry> findEntries(Date inputDate, Date nextDay);
 
     @Query("SELECT * FROM entries WHERE entryId== :id")
     Entry findEntry(int id);

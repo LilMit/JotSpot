@@ -7,6 +7,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import edu.northeastern.jotspot.db.models.Entry;
@@ -59,7 +61,9 @@ public class EntryRepository {
 
         @Override
         protected List<Entry> doInBackground(final String... params) {
-            return asyncTaskDao.findEntries(Date.valueOf(params[0]));
+            Date date1 = Date.valueOf(params[0]);
+            Date date2 = new Date(date1.getTime()+86400000);
+            return asyncTaskDao.findEntries(date1, date2);
         }
 
         @Override
