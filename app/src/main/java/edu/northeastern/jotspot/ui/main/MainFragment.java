@@ -45,7 +45,7 @@ import edu.northeastern.jotspot.viewEntry.ViewTextEntryActivity;
  * This was initially created by following Chapter 68 of Android Studio 4.1 Development
  * Essentials then modified
  */
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
     private MainViewModel mainViewModel;
     private EntryListAdapter adapter;
@@ -54,7 +54,8 @@ public class MainFragment extends Fragment {
     NotificationManager notificationManager;
     private static final int notificationId = 101;
     private static final String KEY_REMOTE_ENTRY = "key_remote_entry";
-    private SharedPreferences sharedPreferences;
+
+    private DatePickerDialog datePickerDialog;
 //    private TextView entryId;
 //    private TextView entryTimestamp;
 //    private TextView entryType;
@@ -90,15 +91,8 @@ public class MainFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        datePickerDialog = makeDatePicker();
 
-//        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-//        if (sharedPreferences.getBoolean("send_notification", false)) {
-//            notificationManager = (NotificationManager) getActivity().getSystemService(
-//                    Context.NOTIFICATION_SERVICE);
-//            createNotificationChannel(NOTIFICATION_CHANNEL, "JotSpot Reminders",
-//                    "JotSpot Reminder Channel");
-//            handleIntent();
-//        }
         notificationManager = (NotificationManager) getActivity().getSystemService(
                 Context.NOTIFICATION_SERVICE);
         createNotificationChannel(NOTIFICATION_CHANNEL, "JotSpot Reminders",
@@ -140,33 +134,22 @@ public class MainFragment extends Fragment {
 
         notificationManager.notify(notificationId, repliedNotification);
     }
-    public class DatePickerFragment extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener {
 
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            // Do something with the date chosen by the user
-            Date date = new Date(year,month,day);
-            mainViewModel.findEntries(String.valueOf(date));
-        }
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Date date = new Date(year,month+1,dayOfMonth);
+        mainViewModel.findEntries(String.valueOf(date));
     }
 
-    public void showDatePickerDialog(View v) {
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
-    }
+    private DatePickerDialog makeDatePicker(){
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
 
+        // Create a new instance of DatePickerDialog and return it
+        return new DatePickerDialog(getActivity(), this, year, month, day);
+    }
 
 //    private void clearFields() {
 //        entryId.setText("");
@@ -199,7 +182,7 @@ public class MainFragment extends Fragment {
         findButton.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDatePickerDialog(v);
+                datePickerDialog.show();
             }
         }));
         //TODO reimplement
