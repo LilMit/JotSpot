@@ -64,6 +64,8 @@ public class NotificationService extends Service {
 
         alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmReceiver.class);
+        // cancel already scheduled reminders
+        cancelReminder(context, AlarmReceiver.class);
         alarmIntent = PendingIntent.getBroadcast(context, ALARM_REQUEST_CODE, intent, 0);
 
 // Set the alarm to start at hour, min
@@ -72,9 +74,8 @@ public class NotificationService extends Service {
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, min);
 
-        // cancel already scheduled reminders
-        cancelReminder(context, AlarmReceiver.class);
-        // delete prior schedule
+
+        // set for next day if already occurred
         if (calendar.before(calendar))
             calendar.add(Calendar.DATE, 1);
 
@@ -123,12 +124,13 @@ public class NotificationService extends Service {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+            Log.e(TAG, "received broadcast");
             sendNotification(context);
         }
     }
 
     public static void sendNotification(Context context) {
-
+        Log.e(TAG, "sending Notification");
         String channelId = NOTIFICATION_CHANNEL;
         String replyLabel = "Write your entry here.";
 
