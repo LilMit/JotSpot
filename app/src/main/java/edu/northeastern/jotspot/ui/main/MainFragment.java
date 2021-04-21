@@ -5,7 +5,9 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.RemoteInput;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,7 +41,8 @@ import edu.northeastern.jotspot.viewEntry.ViewAudioEntryActivity;
 import edu.northeastern.jotspot.viewEntry.ViewTextEntryActivity;
 
 /**
- * This was initially created by following Chapter 68 of Android Studio 4.1 Development Essentials then modified
+ * This was initially created by following Chapter 68 of Android Studio 4.1 Development
+ * Essentials then modified
  */
 public class MainFragment extends Fragment {
 
@@ -49,7 +53,7 @@ public class MainFragment extends Fragment {
     NotificationManager notificationManager;
     private static final int notificationId = 101;
     private static final String KEY_REMOTE_ENTRY = "key_remote_entry";
-
+    private SharedPreferences sharedPreferences;
 //    private TextView entryId;
 //    private TextView entryTimestamp;
 //    private TextView entryType;
@@ -76,7 +80,7 @@ public class MainFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main, container, false);
     }
@@ -86,13 +90,15 @@ public class MainFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
-//        notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-//
-//        createNotificationChannel(NOTIFICATION_CHANNEL, "JotSpot Reminders",
-//                "JotSpot Reminder Channel");
-//
-//        handleIntent();
-//        sendNotification();
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        if (sharedPreferences.getBoolean("send_notification", false)) {
+            notificationManager = (NotificationManager) getActivity().getSystemService(
+                    Context.NOTIFICATION_SERVICE);
+            createNotificationChannel(NOTIFICATION_CHANNEL, "JotSpot Reminders",
+                    "JotSpot Reminder Channel");
+            handleIntent();
+        }
+
         listenerSetup();
         observerSetup();
         recyclerSetup();
@@ -110,69 +116,11 @@ public class MainFragment extends Fragment {
         notificationManager.createNotificationChannel(channel);
     }
 
-//    // sample code from docs https://developer.android.com/training/scheduling/alarms
-//    public void scheduleNotification(int hour, int min){
-//        AlarmManager alarmMgr;
-//        PendingIntent alarmIntent;
-//
-//        alarmMgr = (AlarmManager)getContext().getSystemService(Context.ALARM_SERVICE);
-//        Intent intent = new Intent(getContext(), AlarmReceiver.class);
-//        alarmIntent = PendingIntent.getBroadcast(getContext(), 0, intent, 0);
-//
-//// Set the alarm to start at hour, min
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTimeInMillis(System.currentTimeMillis());
-//        calendar.set(Calendar.HOUR_OF_DAY, hour);
-//        calendar.set(Calendar.MINUTE, min);
-//
-//        alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-//                AlarmManager.INTERVAL_DAY, alarmIntent);
-//
-//
-//    }
-//
-//    public class AlarmReceiver extends BroadcastReceiver {
-//        String TAG = "AlarmReceiver";
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            sendNotification();
-//        }
-//    }
-
-    public void sendNotification() {
-
-        String channelId = NOTIFICATION_CHANNEL;
-        String replyLabel = "Write your entry here.";
-
-        RemoteInput remoteInput = new RemoteInput.Builder(KEY_REMOTE_ENTRY).setLabel(replyLabel)
-                .build();
-
-        Intent resultIntent = new Intent(getActivity(), EntryTypeSelection.class);
-        Intent entryIntent = new Intent(getActivity(), MainActivity.class);
-
-        PendingIntent pendingIntent = PendingIntent
-                .getActivity(getActivity(), 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        PendingIntent newEntryPendingIntent = PendingIntent.getActivity(getActivity(),0,entryIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        final Icon icon = Icon.createWithResource(getActivity(), R.mipmap.ic_launcher);
-        Notification.Action replyAction = new Notification.Action.Builder(icon, "New Entry",
-                newEntryPendingIntent).addRemoteInput(remoteInput).build();
-
-        Notification notification = new Notification.Builder(getActivity(), channelId)
-                .setContentTitle("JotSpot Reminder").setContentText("Time to write an entry!")
-                .setSmallIcon(R.mipmap.ic_launcher).setChannelId(channelId)
-                .setContentIntent(pendingIntent).addAction(replyAction).build();
-
-        notificationManager.notify(notificationId, notification);
-
-    }
-
-    private void handleIntent(){
+    private void handleIntent() {
         Intent intent = getActivity().getIntent();
 
         Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);
-        if (remoteInput !=null){
+        if (remoteInput != null) {
             //add to database
             String inputString = remoteInput.getCharSequence(KEY_REMOTE_ENTRY).toString();
             Date date = new Date(Instant.now().toEpochMilli());
@@ -180,7 +128,9 @@ public class MainFragment extends Fragment {
             mainViewModel.insertEntry(entry);
         }
 
-        Notification repliedNotification = new Notification.Builder(getActivity(), NOTIFICATION_CHANNEL).setSmallIcon(R.drawable.ic_launcher_foreground).setContentText("Entry saved.").build();
+        Notification repliedNotification = new Notification.Builder(getActivity(),
+                NOTIFICATION_CHANNEL).setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentText("Entry saved.").build();
 
         notificationManager.notify(notificationId, repliedNotification);
     }
@@ -246,7 +196,8 @@ public class MainFragment extends Fragment {
             }
         });
         //TODO reimplement in search later
-//        mainViewModel.getSearchResults().observe(getViewLifecycleOwner(), new Observer<List<Entry>>() {
+//        mainViewModel.getSearchResults().observe(getViewLifecycleOwner(), new
+//        Observer<List<Entry>>() {
 //            @Override
 //            public void onChanged(List<Entry> entries) {
 //                if (entries.size() > 0) {
@@ -273,9 +224,11 @@ public class MainFragment extends Fragment {
                 String date = item.getDate().toString();
                 Intent intent;
                 if (type == EntryType.TEXT) {
-                    intent = new Intent(MainFragment.this.getContext(), ViewTextEntryActivity.class);
+                    intent = new Intent(MainFragment.this.getContext(),
+                            ViewTextEntryActivity.class);
                 } else {
-                    intent = new Intent(MainFragment.this.getContext(), ViewAudioEntryActivity.class);
+                    intent = new Intent(MainFragment.this.getContext(),
+                            ViewAudioEntryActivity.class);
                 }
 //                            Bundle bundle = new Bundle();
                 ArrayList<String> info = new ArrayList<>();
