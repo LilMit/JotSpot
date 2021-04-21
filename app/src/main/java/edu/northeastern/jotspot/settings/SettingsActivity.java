@@ -120,8 +120,8 @@ public class SettingsActivity extends AppCompatActivity {
         public void onDialogClosed(boolean positiveResult) {
             if (positiveResult) {
                 // generate value to save
-                int hours = mTimePicker.getCurrentHour();
-                int minutes = mTimePicker.getCurrentMinute();
+                int hours = mTimePicker.getHour();
+                int minutes = mTimePicker.getMinute();
                 int minutesAfterMidnight = (hours * 60) + minutes;
 
                 // Get the related Preference and save the value

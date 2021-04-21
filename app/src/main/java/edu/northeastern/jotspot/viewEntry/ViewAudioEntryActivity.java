@@ -1,10 +1,7 @@
 package edu.northeastern.jotspot.viewEntry;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
-import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,24 +10,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 
-import edu.northeastern.jotspot.db.EntryRepository;
-import edu.northeastern.jotspot.db.models.Entry;
-import edu.northeastern.jotspot.db.models.EntryType;
 import edu.northeastern.jotspot.ui.main.MainViewModel;
 
 /**

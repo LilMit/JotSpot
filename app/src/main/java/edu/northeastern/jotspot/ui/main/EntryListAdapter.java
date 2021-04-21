@@ -1,6 +1,5 @@
 package edu.northeastern.jotspot.ui.main;
 
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,14 +9,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import edu.northeastern.jotspot.R;
 import edu.northeastern.jotspot.db.models.Entry;
 import edu.northeastern.jotspot.db.models.EntryType;
-import edu.northeastern.jotspot.viewEntry.ViewAudioEntryActivity;
-import edu.northeastern.jotspot.viewEntry.ViewTextEntryActivity;
 
 /**
  * This was created by following Chapter 68 of Android Studio 4.1 Development Essentials

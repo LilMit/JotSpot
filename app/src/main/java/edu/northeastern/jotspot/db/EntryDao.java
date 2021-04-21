@@ -25,10 +25,6 @@ public interface EntryDao {
     @Query("SELECT * FROM entries WHERE entryId== :id")
     Entry findEntry(int id);
 
-//    //TODO: correct so actually finds text of keyword
-//    @Query("SELECT * FROM textEntries WHERE content LIKE '%:keyword%'")
-//    List<Entry> findEntry(String keyword);
-
     @Insert
     void addEntry(Entry entry);
 

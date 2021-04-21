@@ -1,7 +1,5 @@
 package edu.northeastern.jotspot;
 
-import androidx.annotation.Nullable;
-
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -19,9 +17,9 @@ import android.graphics.drawable.Icon;
 import android.os.IBinder;
 import android.util.Log;
 
-import java.util.Calendar;
+import androidx.annotation.Nullable;
 
-import edu.northeastern.jotspot.ui.main.MainFragment;
+import java.util.Calendar;
 
 public class NotificationService extends Service {
 

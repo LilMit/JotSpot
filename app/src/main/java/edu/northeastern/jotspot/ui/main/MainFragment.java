@@ -1,5 +1,7 @@
 package edu.northeastern.jotspot.ui.main;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -9,31 +11,33 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.preference.PreferenceManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.sql.Date;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import edu.northeastern.jotspot.EntryTypeSelection;
 import edu.northeastern.jotspot.R;
-import edu.northeastern.jotspot.settings.SettingsActivity;
 import edu.northeastern.jotspot.db.models.Entry;
 import edu.northeastern.jotspot.db.models.EntryType;
+import edu.northeastern.jotspot.settings.SettingsActivity;
 import edu.northeastern.jotspot.viewEntry.ViewAudioEntryActivity;
 import edu.northeastern.jotspot.viewEntry.ViewTextEntryActivity;
 
@@ -136,6 +140,33 @@ public class MainFragment extends Fragment {
 
         notificationManager.notify(notificationId, repliedNotification);
     }
+    public class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            // Do something with the date chosen by the user
+            Date date = new Date(year,month,day);
+            mainViewModel.findEntries(String.valueOf(date));
+        }
+    }
+
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
+    }
+
 
 //    private void clearFields() {
 //        entryId.setText("");
@@ -165,21 +196,14 @@ public class MainFragment extends Fragment {
             }
         });
 
-//        preferencesButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(MainFragment.this.getContext(), SettingsActivity.class);
-//                startActivity(i);
-//            }
-//        });
-
+        findButton.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(v);
+            }
+        }));
         //TODO reimplement
-//        findButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mainViewModel.findEntry(entryTimestamp.getText().toString());
-//            }
-//        });
+
 //        deleteButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -198,19 +222,17 @@ public class MainFragment extends Fragment {
             }
         });
         //TODO reimplement in search later
-//        mainViewModel.getSearchResults().observe(getViewLifecycleOwner(), new
-//        Observer<List<Entry>>() {
-//            @Override
-//            public void onChanged(List<Entry> entries) {
-//                if (entries.size() > 0) {
-//                    entryId.setText(String.format(Locale.US, "%d", entries.get(0).getId()));
-//                    entryTimestamp.setText(entries.get(0).getTimestamp().toString());
-//                    entryType.setText(String.format(Locale.US, "%d", entries.get(0).getType()));
-//                } else {
-//                    entryId.setText("No matching entries.");
-//                }
-//            }
-//        });
+        mainViewModel.getSearchResults().observe(getViewLifecycleOwner(), new
+        Observer<List<Entry>>() {
+            @Override
+            public void onChanged(List<Entry> entries) {
+                if (entries.size() > 0) {
+                    adapter.setEntryList(entries);
+                } else {
+                    Toast.makeText(getContext(), "No matching entries found.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void recyclerSetup() {

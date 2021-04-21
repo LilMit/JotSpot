@@ -8,15 +8,10 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
-import java.sql.Date;
-import java.time.Instant;
 import java.util.ArrayList;
 
 import edu.northeastern.jotspot.R;
-import edu.northeastern.jotspot.db.models.Entry;
-import edu.northeastern.jotspot.db.models.EntryType;
 import edu.northeastern.jotspot.ui.main.MainViewModel;
 
 public class ViewTextEntryActivity extends AppCompatActivity {
