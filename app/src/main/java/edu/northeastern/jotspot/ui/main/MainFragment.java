@@ -163,7 +163,7 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
     private void listenerSetup() {
         ImageButton addButton = getView().findViewById(R.id.add_button);
         ImageButton findButton = getView().findViewById(R.id.search_button);
-        ImageButton deleteButton = getView().findViewById(R.id.delete_button);
+        ImageButton refreshButton = getView().findViewById(R.id.delete_button);
         ImageButton preferencesButton = getView().findViewById(R.id.preferencesButton);
 
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -188,15 +188,13 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
                 datePickerDialog.show();
             }
         }));
-        //TODO reimplement
 
-//        deleteButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mainViewModel.deleteEntry(entryId.getText().toString());
-//                clearFields();
-//            }
-//        });
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.setEntryList(mainViewModel.getAllEntries().getValue());
+            }
+        });
 
     }
 
