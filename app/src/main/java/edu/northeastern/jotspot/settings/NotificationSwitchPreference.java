@@ -1,9 +1,11 @@
-package edu.northeastern.jotspot;
+package edu.northeastern.jotspot.settings;
 
 import android.content.Context;
 import android.util.AttributeSet;
 
 import androidx.preference.SwitchPreferenceCompat;
+
+import edu.northeastern.jotspot.NotificationService;
 
 public class NotificationSwitchPreference extends SwitchPreferenceCompat {
 

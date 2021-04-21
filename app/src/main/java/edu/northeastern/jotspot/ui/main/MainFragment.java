@@ -3,13 +3,11 @@ package edu.northeastern.jotspot.ui.main;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.RemoteInput;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.Icon;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -32,9 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.northeastern.jotspot.EntryTypeSelection;
-import edu.northeastern.jotspot.MainActivity;
 import edu.northeastern.jotspot.R;
-import edu.northeastern.jotspot.SettingsActivity;
+import edu.northeastern.jotspot.settings.SettingsActivity;
 import edu.northeastern.jotspot.db.models.Entry;
 import edu.northeastern.jotspot.db.models.EntryType;
 import edu.northeastern.jotspot.viewEntry.ViewAudioEntryActivity;
@@ -90,14 +87,19 @@ public class MainFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        if (sharedPreferences.getBoolean("send_notification", false)) {
-            notificationManager = (NotificationManager) getActivity().getSystemService(
-                    Context.NOTIFICATION_SERVICE);
-            createNotificationChannel(NOTIFICATION_CHANNEL, "JotSpot Reminders",
-                    "JotSpot Reminder Channel");
-            handleIntent();
-        }
+//        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+//        if (sharedPreferences.getBoolean("send_notification", false)) {
+//            notificationManager = (NotificationManager) getActivity().getSystemService(
+//                    Context.NOTIFICATION_SERVICE);
+//            createNotificationChannel(NOTIFICATION_CHANNEL, "JotSpot Reminders",
+//                    "JotSpot Reminder Channel");
+//            handleIntent();
+//        }
+        notificationManager = (NotificationManager) getActivity().getSystemService(
+                Context.NOTIFICATION_SERVICE);
+        createNotificationChannel(NOTIFICATION_CHANNEL, "JotSpot Reminders",
+                "JotSpot Reminder Channel");
+        handleIntent();
 
         listenerSetup();
         observerSetup();

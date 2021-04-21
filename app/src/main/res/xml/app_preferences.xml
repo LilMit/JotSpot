@@ -3,14 +3,14 @@
 
     <PreferenceCategory android:title="Notifications">
 
-        <edu.northeastern.jotspot.NotificationSwitchPreference
+        <edu.northeastern.jotspot.settings.NotificationSwitchPreference
             android:id="@+id/notification_switch"
             android:defaultValue="false"
             android:key="send_notifications"
             android:title="@string/notify_switch_label"
             android:disableDependentsState="false"/>
 
-        <edu.northeastern.jotspot.TimePreference
+        <edu.northeastern.jotspot.settings.TimePreference
             android:dependency="send_notifications"
             android:key="reminder_time"
             android:summary="Time Summary"

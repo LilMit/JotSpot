@@ -1,4 +1,4 @@
-package edu.northeastern.jotspot;
+package edu.northeastern.jotspot.settings;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -6,6 +6,8 @@ import android.util.AttributeSet;
 
 import androidx.preference.DialogPreference;
 import androidx.preference.Preference;
+
+import edu.northeastern.jotspot.R;
 
 /**
  * I tried figuring out how to implement a time picker in a preference before finally using

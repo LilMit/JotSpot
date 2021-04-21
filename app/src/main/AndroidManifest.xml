@@ -16,7 +16,7 @@
         <receiver android:name=".NotificationService$AlarmReceiver"/>
 
         <activity
-            android:name=".SettingsActivity"
+            android:name=".settings.SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity android:name=".newEntry.AudioEntryActivity" />
         <activity android:name=".newEntry.TextEntryActivity" />

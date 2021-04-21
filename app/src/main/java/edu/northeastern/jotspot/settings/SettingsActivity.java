@@ -1,9 +1,7 @@
-package edu.northeastern.jotspot;
+package edu.northeastern.jotspot.settings;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.TimePicker;
@@ -15,8 +13,9 @@ import androidx.preference.DialogPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceDialogFragmentCompat;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.SwitchPreferenceCompat;
-import androidx.preference.TwoStatePreference;
+
+import edu.northeastern.jotspot.NotificationService;
+import edu.northeastern.jotspot.R;
 
 public class SettingsActivity extends AppCompatActivity {
 

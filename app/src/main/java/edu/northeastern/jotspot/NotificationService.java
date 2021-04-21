@@ -21,6 +21,8 @@ import android.util.Log;
 
 import java.util.Calendar;
 
+import edu.northeastern.jotspot.ui.main.MainFragment;
+
 public class NotificationService extends Service {
 
     private static final String TAG  = "Notification Service";
