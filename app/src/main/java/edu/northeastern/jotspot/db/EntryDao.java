@@ -16,14 +16,14 @@ import edu.northeastern.jotspot.db.models.Entry;
 @Dao
 public interface EntryDao {
 
-    @Query("SELECT * FROM entries")
+    @Query("SELECT * FROM entries ORDER BY dateCreated DESC")
     LiveData<List<Entry>> getAllEntries();
 
     // dateCreated is stored as long representing ms. there are 86400000 ms in a day and the search date is a time at midnight
     @Query("SELECT * FROM entries WHERE dateCreated BETWEEN :inputDate AND :nextDay")
     List<Entry> findEntries(Date inputDate, Date nextDay);
 
-    @Query("SELECT * FROM entries WHERE entryId== :id")
+    @Query("SELECT * FROM entries WHERE entryId== :id LIMIT 1")
     Entry findEntry(int id);
 
     @Insert
@@ -31,6 +31,5 @@ public interface EntryDao {
 
     @Query("DELETE from entries WHERE entryId = :id")
     void deleteEntry(int id);
-
 
 }

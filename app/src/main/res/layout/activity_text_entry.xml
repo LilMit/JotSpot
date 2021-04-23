@@ -2,32 +2,52 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:id="@+id/text_entry_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:backgroundTint="@color/white"
     tools:context=".newEntry.TextEntryActivity">
+
+    <TextView
+        android:id="@+id/new_text_entry_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@color/pale"
+        android:backgroundTint="@color/pale"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/date/ddmmyy" />
 
     <Button
         android:id="@+id/save_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="save"
+        android:textColor="@color/darkteal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_entry_input_layout"
-        android:text="save" />
+        app:layout_constraintTop_toBottomOf="@id/text_entry_input_layout" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/text_entry_input_layout"
-        android:layout_width="415dp"
-        android:layout_height="476dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/new_text_entry_date">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/text_entry_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="hint" />
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/pale"
+            android:hint="Dear Diary,"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

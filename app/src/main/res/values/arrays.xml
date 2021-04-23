@@ -1,57 +1,19 @@
 <resources>
-    <!-- Date Preference -->
-    <string-array name="date_prefs">
-        <item>MM/DD/YYYY</item>
-        <item>DD/MM/YYYY</item>
-    </string-array>
-
-    <string-array name="date_examples">
-        <item>01/16/2020</item>
-        <item>16/01/2020</item>
-    </string-array>
-
-    <!-- Notification Preference -->
-    <string-array name="hour_prefs">
+    <integer-array name="rewardNumbers">
         <item>1</item>
         <item>2</item>
         <item>3</item>
-        <item>4</item>
         <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
         <item>10</item>
-        <item>11</item>
-        <item>12</item>
-    </string-array>
-
-    <string-array name="minute_prefs">
-        <item>00</item>
         <item>15</item>
-        <item>30</item>
-        <item>45</item>
-    </string-array>
-
-    <string-array name="am_pm_prefs">
-        <item>am</item>
-        <item>pm</item>
-    </string-array>
-
-    <string-array name="day_prefs">
-        <item>Day</item>
-        <item>Sunday</item>
-        <item>Monday</item>
-        <item>Tuesday</item>
-        <item>Wednesday</item>
-        <item>Thursday</item>
-        <item>Friday</item>
-        <item>Saturday</item>
-    </string-array>
-
-
-
-
-
+        <item>25</item>
+        <item>50</item>
+        <item>100</item>
+        <item>250</item>
+        <item>500</item>
+        <item>1000</item>
+        <item>5000</item>
+        <item>10000</item>
+    </integer-array>
 
 </resources>

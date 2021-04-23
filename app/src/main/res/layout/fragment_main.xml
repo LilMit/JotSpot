@@ -8,11 +8,13 @@
     tools:context=".ui.main.MainFragment">
 
     <TextView
-        android:id="@+id/welcome_text"
+        android:id="@+id/entry_count_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:background="@color/pale"
         android:text="Welcome!"
+        android:textColor="@color/darkteal"
         android:textSize="36sp" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -20,7 +22,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/toolbar"
-        android:layout_below="@id/welcome_text">
+        android:layout_below="@id/entry_count_textview"
+        android:background="@color/teal"
+        android:clipToPadding="false"
+        tools:listitem="@layout/entry_list_item">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -29,6 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentBottom="true"
+        android:background="@color/darkteal"
         android:orientation="horizontal">
 
         <ImageButton
@@ -36,32 +42,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:backgroundTint="@color/teal"
             android:src="@android:drawable/ic_menu_search"
-            android:tint="#3F51B5" />
+            android:tint="@color/darkteal" />
+
+        <ImageButton
+            android:id="@+id/refresh_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/teal"
+            android:src="@android:drawable/ic_popup_sync"
+            android:tint="@color/darkteal" />
 
         <ImageButton
             android:id="@+id/add_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:backgroundTint="@color/teal"
             android:src="@android:drawable/ic_input_add"
-            android:tint="#3F51B5" />
-
-        <ImageButton
-            android:id="@+id/delete_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@android:drawable/ic_menu_revert"
-            android:tint="#3F51B5" />
+            android:tint="@color/darkteal" />
 
         <ImageButton
             android:id="@+id/preferencesButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:backgroundTint="@color/teal"
             android:src="@android:drawable/ic_menu_preferences"
-            android:tint="#3F51B5" />
+            android:tint="@color/darkteal" />
 
     </LinearLayout>
 

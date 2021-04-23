@@ -42,6 +42,8 @@ public class MainViewModel extends AndroidViewModel {
         repository.findEntries(date);
     }
 
+    public int getNumEntries(){ return allEntries.getValue().size();}
+
     public void findEntry(String id) {
         repository.findEntry(id);
     }

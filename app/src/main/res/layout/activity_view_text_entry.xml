@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@color/teal"
     tools:context=".viewEntry.ViewTextEntryActivity">
 
     <TextView
@@ -12,15 +13,20 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="TextView" />
+        android:background="@color/pale"
+        android:layout_marginTop="5dp"
+        android:text="TextView"
+        android:textSize="24sp" />
 
     <Button
         android:id="@+id/back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="back"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:text="back"
+        android:textColor="#FFFFFF"
+     />
 
     <ScrollView
         android:id="@+id/text_scrollview"
@@ -33,7 +39,9 @@
             android:id="@+id/entry_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="TextView" />
+            android:background="@color/pale"
+            android:text="TextView"
+            android:textSize="24sp" />
     </ScrollView>
 
 </RelativeLayout>

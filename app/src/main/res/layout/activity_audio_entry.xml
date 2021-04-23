@@ -4,8 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/white"
     tools:context=".newEntry.AudioEntryActivity">
+
+    <TextView
+        android:id="@+id/new_audio_entry_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@color/pale"
+        android:backgroundTint="@color/pale"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/date/ddmmyy" />
 
     <androidx.constraintlayout.widget.Group
         android:layout_width="wrap_content"
@@ -17,8 +30,7 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginEnd="14dp"
-        android:layout_marginRight="14dp"
-        android:background="#FFFFFF"
+        android:background="@color/white"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/playButton"
@@ -29,7 +41,7 @@
         android:id="@+id/playButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:background="#FFFFFF"
+        android:background="@color/white"
         android:scaleType="fitCenter"
         android:tint="#3F51B5"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -44,8 +56,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="14dp"
-        android:layout_marginLeft="14dp"
-        android:background="#FFFFFF"
+        android:background="@color/white"
         android:scaleType="fitCenter"
         android:tint="#009688"
         app:layout_constraintBottom_toBottomOf="parent"
