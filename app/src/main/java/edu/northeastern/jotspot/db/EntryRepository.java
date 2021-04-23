@@ -107,6 +107,23 @@ public class EntryRepository {
         }
     }
 
+    private static class UpdateAsyncTask extends AsyncTask<Entry, Void, Void> {
+
+        private final EntryDao asyncTaskDao;
+
+        UpdateAsyncTask(EntryDao dao){
+            asyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Entry... params) {
+            Entry entry = params[0];
+            asyncTaskDao.updateEntry(entry);
+            return null;
+        }
+    }
+
+
     private static class DeleteAsyncTask extends AsyncTask<String, Void, Void> {
         private final EntryDao asyncTaskDao;
 
@@ -124,6 +141,11 @@ public class EntryRepository {
 
     public void insertEntry(Entry newEntry){
         InsertAsyncTask task = new InsertAsyncTask(entryDao);
+        task.execute(newEntry);
+    }
+
+    public void updateEntry(Entry newEntry){
+        UpdateAsyncTask task = new UpdateAsyncTask(entryDao);
         task.execute(newEntry);
     }
 

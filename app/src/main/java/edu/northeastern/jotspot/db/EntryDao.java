@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.sql.Date;
 import java.util.List;
@@ -28,6 +29,9 @@ public interface EntryDao {
 
     @Insert
     void addEntry(Entry entry);
+
+    @Update
+    void updateEntry(Entry entry);
 
     @Query("DELETE from entries WHERE entryId = :id")
     void deleteEntry(int id);

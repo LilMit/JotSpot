@@ -38,6 +38,10 @@ public class MainViewModel extends AndroidViewModel {
         repository.insertEntry(entry);
     }
 
+    public void updateEntry(Entry entry) {
+        repository.updateEntry(entry);
+    }
+
     public void findEntries(String date) {
         repository.findEntries(date);
     }
