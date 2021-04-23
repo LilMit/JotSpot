@@ -26,6 +26,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 
+import edu.northeastern.jotspot.R;
 import edu.northeastern.jotspot.db.models.Entry;
 import edu.northeastern.jotspot.db.models.EntryType;
 import edu.northeastern.jotspot.ui.main.MainViewModel;
@@ -53,6 +54,8 @@ public class AudioEntryActivity extends AppCompatActivity {
 
     private Date startTime = null;
     private Date endTime = null;
+
+    private int mood =0;
 
     private boolean recordPermissionAccepted = false;
     private String[] permissions = {Manifest.permission.RECORD_AUDIO};
@@ -194,6 +197,9 @@ public class AudioEntryActivity extends AppCompatActivity {
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
+        LinearLayout vll = new LinearLayout(this);
+        vll.setOrientation(LinearLayout.VERTICAL);
         LinearLayout ll = new LinearLayout(this);
 
         recordButton = new RecordButton(this);
@@ -232,7 +238,9 @@ public class AudioEntryActivity extends AppCompatActivity {
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
-        setContentView(ll);
+        vll.addView(ll);
+
+        setContentView(vll);
 
         // setContentView(R.layout.activity_audio_entry);
     }

@@ -24,6 +24,9 @@ public class Entry {
     @ColumnInfo(name = "content")
     private String content;
 
+    @ColumnInfo(name = "mood")
+    private int mood;
+
     public Entry(){}
 
     public Entry(Date date, EntryType type) {
@@ -36,6 +39,13 @@ public class Entry {
         this.date = date;
         this.type = type;
         this.content = content;
+    }
+
+    public Entry(Date date, EntryType type, String content, int mood) {
+        this.date = date;
+        this.type = type;
+        this.content = content;
+        this.mood = mood;
     }
 
     public int getId() {
@@ -68,5 +78,13 @@ public class Entry {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public int getMood() {
+        return mood;
+    }
+
+    public void setMood(int mood) {
+        this.mood = mood;
     }
 }
