@@ -73,7 +73,7 @@ public class ViewAudioEntryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onPlay(mStartPlaying);
-                if (mStartPlaying) {
+                if (!mStartPlaying) {
                     setText("Play");
                 } else {
                     setText("Pause");
@@ -101,16 +101,19 @@ public class ViewAudioEntryActivity extends AppCompatActivity {
         fileName = entry.get(1);
         id = entry.get(2);
 
-        LinearLayout ll = new LinearLayout(this);
+        LinearLayout vll = new LinearLayout(this);
+        vll.setOrientation(LinearLayout.VERTICAL);
+
         timestamp = new TextView(this);
         timestamp.setText(startTime);
-        ll.addView(timestamp,
+        timestamp.setTextSize(24);
+        vll.addView(timestamp,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
 
-
+        LinearLayout ll = new LinearLayout(this);
         playButton = new PlayButton(this);
         ll.addView(playButton,
                 new LinearLayout.LayoutParams(
@@ -148,7 +151,8 @@ public class ViewAudioEntryActivity extends AppCompatActivity {
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
-        setContentView(ll);
+        vll.addView(ll);
+        setContentView(vll);
     }
 
     @Override
