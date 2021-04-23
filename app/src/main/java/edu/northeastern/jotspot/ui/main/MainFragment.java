@@ -61,6 +61,7 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
 
     private DatePickerDialog datePickerDialog;
     private TextView entryCountTextView;
+    private ImageButton refreshButton;
 
 
     public MainFragment() {
@@ -133,13 +134,13 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
             Date date = new Date(Instant.now().toEpochMilli());
             Entry entry = new Entry(date, EntryType.TEXT, inputString);
             mainViewModel.insertEntry(entry);
+            Notification repliedNotification = new Notification.Builder(getActivity(),
+                    NOTIFICATION_CHANNEL).setSmallIcon(R.drawable.ic_launcher_foreground)
+                    .setContentText("Entry saved.").build();
+
+            notificationManager.notify(notificationId, repliedNotification);
         }
 
-        Notification repliedNotification = new Notification.Builder(getActivity(),
-                NOTIFICATION_CHANNEL).setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentText("Entry saved.").build();
-
-        notificationManager.notify(notificationId, repliedNotification);
     }
 
     @Override
@@ -168,7 +169,7 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
     private void listenerSetup() {
         ImageButton addButton = getView().findViewById(R.id.add_button);
         ImageButton findButton = getView().findViewById(R.id.search_button);
-        ImageButton refreshButton = getView().findViewById(R.id.refresh_button);
+        refreshButton = getView().findViewById(R.id.refresh_button);
         ImageButton preferencesButton = getView().findViewById(R.id.preferencesButton);
 
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -198,6 +199,7 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
             @Override
             public void onClick(View v) {
                 adapter.setEntryList(mainViewModel.getAllEntries().getValue());
+                entryCountTextView.setText(totalEntries + " entries");
             }
         });
 
@@ -210,6 +212,7 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
                 adapter.setEntryList(entries);
                 totalEntries = entries.size();
                 entryCountTextView.setText(totalEntries + " entries");
+                refreshButton.setEnabled(false);
                 if(calculateReward(totalEntries)){
                     String ticker = totalEntries + " entries! Great job!";
                     Toast.makeText(MainFragment.this.getActivity(), ticker, Toast.LENGTH_LONG).show();
@@ -222,10 +225,10 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
             @Override
             public void onChanged(List<Entry> entries) {
                 if (entries.size() > 0) {
-                    Log.e(TAG, entries.size() +" results found, updating view");
                     adapter.setEntryList(entries);}
                     String entriesFoundText = entries.size() + " entries found.";
                     entryCountTextView.setText(entriesFoundText);
+                    refreshButton.setEnabled(true);
             }
         });
     }
@@ -249,17 +252,12 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
                     intent = new Intent(MainFragment.this.getContext(),
                             ViewAudioEntryActivity.class);
                 }
-//                            Bundle bundle = new Bundle();
                 ArrayList<String> info = new ArrayList<>();
                 info.add(date);
                 info.add(content);
                 info.add(String.valueOf(id));
-//                            bundle.putStringArrayList("ENTRY", info);
                 intent.putStringArrayListExtra("ENTRY", info);
-//                            intent.putExtra("CONTENT", content);
-                Log.e("Adapter", "about to start activity");
                 startActivity(intent);
-//                adapter.notifyItemChanged(position);
             }
 
         };
