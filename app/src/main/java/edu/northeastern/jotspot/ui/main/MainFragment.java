@@ -94,9 +94,9 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        totalEntries = mainViewModel.getNumEntries();
+
         entryCountTextView = getView().findViewById(R.id.entry_count_textview);
-        entryCountTextView.setText(totalEntries + "entries");
+
 
         datePickerDialog = makeDatePicker();
 
@@ -209,6 +209,7 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
             public void onChanged(List<Entry> entries) {
                 adapter.setEntryList(entries);
                 totalEntries = entries.size();
+                entryCountTextView.setText(totalEntries + " entries");
                 if(calculateReward(totalEntries)){
                     String ticker = totalEntries + " entries! Great job!";
                     Toast.makeText(MainFragment.this.getActivity(), ticker, Toast.LENGTH_LONG).show();
@@ -222,10 +223,9 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
             public void onChanged(List<Entry> entries) {
                 if (entries.size() > 0) {
                     Log.e(TAG, entries.size() +" results found, updating view");
-                    adapter.setEntryList(entries);
-                } else {
-                    Toast.makeText(getContext(), "No matching entries found.", Toast.LENGTH_SHORT).show();
-                }
+                    adapter.setEntryList(entries);}
+                    String entriesFoundText = entries.size() + " entries found.";
+                    entryCountTextView.setText(entriesFoundText);
             }
         });
     }
@@ -253,6 +253,7 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
                 ArrayList<String> info = new ArrayList<>();
                 info.add(date);
                 info.add(content);
+                info.add(String.valueOf(id));
 //                            bundle.putStringArrayList("ENTRY", info);
                 intent.putStringArrayListExtra("ENTRY", info);
 //                            intent.putExtra("CONTENT", content);

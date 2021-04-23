@@ -15,6 +15,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -39,6 +40,7 @@ public class ViewAudioEntryActivity extends AppCompatActivity {
 
     private String startTime = null;
     private TextView timestamp = null;
+    private String id;
 
     private void onPlay(boolean start) {
         if (start) {
@@ -96,8 +98,8 @@ public class ViewAudioEntryActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         ArrayList<String> entry = extras.getStringArrayList("ENTRY");
         startTime = entry.get(0);
-        //startTime = Date.valueOf(entry.get(0));
         fileName = entry.get(1);
+        id = entry.get(2);
 
         LinearLayout ll = new LinearLayout(this);
         timestamp = new TextView(this);
@@ -116,23 +118,22 @@ public class ViewAudioEntryActivity extends AppCompatActivity {
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
 
-//        deleteButton = new Button(this);
-//        deleteButton.setText("delete");
-//        deleteButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                    String content = fileName;
-//                    Entry entry = new Entry(startTime, EntryType.AUDIO, content);
-//                    mainViewModel.deleteEntry(entry);
-//                    finish();
-//                }
-//            }
-//        });
-//        ll.addView(deleteButton,
-//                new LinearLayout.LayoutParams(
-//                        ViewGroup.LayoutParams.WRAP_CONTENT,
-//                        ViewGroup.LayoutParams.WRAP_CONTENT,
-//                        0));
+        deleteButton = new Button(this);
+        deleteButton.setText("delete");
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    mainViewModel.deleteEntry(id);
+                    File file = new File(fileName);
+                    file.delete();
+                    finish();
+                }
+        });
+        ll.addView(deleteButton,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
 
         backButton = new Button(this);
         backButton.setText("back");
@@ -148,8 +149,6 @@ public class ViewAudioEntryActivity extends AppCompatActivity {
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
         setContentView(ll);
-
-        // setContentView(R.layout.activity_audio_entry);
     }
 
     @Override
