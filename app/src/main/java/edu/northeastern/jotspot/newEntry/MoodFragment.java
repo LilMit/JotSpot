@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import edu.northeastern.jotspot.ui.main.MainViewModel;
  */
 public class MoodFragment extends Fragment implements View.OnClickListener{
 
+    private static final String TAG = "MoodFragment";
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,34 +32,36 @@ public class MoodFragment extends Fragment implements View.OnClickListener{
 
     private MainViewModel mainViewModel;
     private Entry currentEntry;
+    private int mood = 0;
 
     public MoodFragment() {
         // Required empty public constructor
     }
 
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param param1 Parameter 1.
-//     * @param param2 Parameter 2.
-//     * @return A new instance of fragment MoodFragment.
-//     */
-//    // TODO: Rename and change types and number of parameters
-//    public static MoodFragment newInstance(String param1, String param2) {
-//        MoodFragment fragment = new MoodFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment MoodFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static MoodFragment newInstance(String param1, String param2) {
+        MoodFragment fragment = new MoodFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-
+        mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+        currentEntry = new Entry();
+        Log.e(TAG, "currentEntry =" + currentEntry.toString());
     }
 
     @Override
@@ -75,6 +79,7 @@ public class MoodFragment extends Fragment implements View.OnClickListener{
                     @Override
                     public void onChanged(Entry entry) {
                         currentEntry = entry;
+                        Log.e(TAG, "currentEntry =" + entry.toString());
                     }
                 });
         listenerSetup(v);
@@ -99,24 +104,35 @@ public class MoodFragment extends Fragment implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.imageButton: {
                 currentEntry.setMood(1);
-                mainViewModel.updateEntry(currentEntry);
+                mood = 1;
+
             }
             case R.id.imageButton2: {
                 currentEntry.setMood(2);
-                mainViewModel.updateEntry(currentEntry);
+                mood = 2;
+
             }
             case R.id.imageButton3: {
                 currentEntry.setMood(3);
-                mainViewModel.updateEntry(currentEntry);
+                mood = 3;
+
             }
             case R.id.imageButton4: {
                 currentEntry.setMood(4);
-                mainViewModel.updateEntry(currentEntry);
+                mood = 4;
+
             }
             case R.id.imageButton5: {
                 currentEntry.setMood(5);
-                mainViewModel.updateEntry(currentEntry);
+                mood = 5;
+
             }
+            mainViewModel.setSelectedEntry(currentEntry);
+
         }
+    }
+
+    public int getMood(){
+        return this.mood;
     }
 }

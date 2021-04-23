@@ -87,4 +87,9 @@ public class Entry {
     public void setMood(int mood) {
         this.mood = mood;
     }
+
+    @Override
+    public String toString(){
+        return type + " entry " + id + ": date: " + date + ", mood: " + mood;
+    }
 }

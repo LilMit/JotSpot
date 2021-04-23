@@ -60,4 +60,8 @@ public class MainViewModel extends AndroidViewModel {
     public void deleteEntry(String id) {
         repository.deleteEntry(id);
     }
+
+    public void setSelectedEntry(Entry entry) {
+        selectedEntry.setValue(entry);
+    }
 }

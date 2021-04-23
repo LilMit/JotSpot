@@ -30,10 +30,11 @@
         android:textColor="@color/darkteal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/moodbar" />
+        app:layout_constraintTop_toBottomOf="@id/moodbar_container_view" />
 
-    <fragment
-        android:id="@+id/moodbar"
+    <androidx.fragment.app.FragmentContainerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/moodbar_container_view"
         android:name="edu.northeastern.jotspot.newEntry.MoodFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

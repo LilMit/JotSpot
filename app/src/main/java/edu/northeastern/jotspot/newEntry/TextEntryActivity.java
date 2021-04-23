@@ -2,12 +2,15 @@ package edu.northeastern.jotspot.newEntry;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -22,6 +25,7 @@ import edu.northeastern.jotspot.ui.main.MainViewModel;
 
 public class TextEntryActivity extends AppCompatActivity {
 
+    private static String TAG = "TextActivity";
     private TextView contentEditText;
     private Button saveButton;
     private Entry currentEntry;
@@ -32,22 +36,49 @@ public class TextEntryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_entry);
+
+        Date date = new Date(Instant.now().toEpochMilli());
+        currentEntry = new Entry(date, EntryType.TEXT);
+        Log.e(TAG, "currentEntry =" + currentEntry.toString());
+
+
+
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        mainViewModel.setSelectedEntry(currentEntry);
+
+        mainViewModel.getSelectedEntry().observe(this, new
+                Observer<Entry>() {
+                    @Override
+                    public void onChanged(Entry entry) {
+                        currentEntry = entry;
+                        Log.e(TAG, "currentEntry =" + currentEntry.toString());
+                    }
+                });
+
         contentEditText = findViewById(R.id.text_entry_edit_text);
         saveButton = findViewById(R.id.save_button);
 
-        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(R.id.moodbar_container_view, MoodFragment.class, null)
+                    .commit();
+        }
         saveButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                Date date = new Date(Instant.now().toEpochMilli());
+
                 String content = contentEditText.getText().toString();
-                Entry entry = new Entry(date, EntryType.TEXT, content);
-                mainViewModel.insertEntry(entry);
+
+                currentEntry.setContent(content);
+
+                mainViewModel.insertEntry(currentEntry);
+                Log.e(TAG, "saving entry "+ currentEntry.toString());
                 finish();
             }
         });
 
     }
+
 }
