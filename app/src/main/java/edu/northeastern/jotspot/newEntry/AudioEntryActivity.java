@@ -133,8 +133,12 @@ public class AudioEntryActivity extends AppCompatActivity {
                 onRecord(mStartRecording);
                 if (mStartRecording) {
                     setText("Stop recording");
+                    playButton.setEnabled(false);
+                    saveButton.setEnabled(false);
                 } else {
                     setText("Start recording");
+                    playButton.setEnabled(true);
+                    saveButton.setEnabled(true);
                 }
                 mStartRecording = !mStartRecording;
             }
@@ -153,7 +157,7 @@ public class AudioEntryActivity extends AppCompatActivity {
         OnClickListener clicker = new OnClickListener() {
             @Override
             public void onClick(View v) {
-                onPlay(mStartPlaying);
+                onPlay(!mStartPlaying);
                 if (mStartPlaying) {
                     setText("Play");
                 } else {
@@ -200,6 +204,7 @@ public class AudioEntryActivity extends AppCompatActivity {
                         0));
 
         playButton = new PlayButton(this);
+        playButton.setEnabled(false);
         ll.addView(playButton,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -221,6 +226,7 @@ public class AudioEntryActivity extends AppCompatActivity {
                 }
             }
         });
+        saveButton.setEnabled(false);
         ll.addView(saveButton,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
