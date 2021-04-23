@@ -8,10 +8,12 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.sql.Date;
 import java.time.Instant;
+import java.util.List;
 
 import edu.northeastern.jotspot.R;
 import edu.northeastern.jotspot.db.models.Entry;
@@ -22,6 +24,7 @@ public class TextEntryActivity extends AppCompatActivity {
 
     private TextView contentEditText;
     private Button saveButton;
+    private Entry currentEntry;
 
     private MainViewModel mainViewModel;
 
@@ -45,5 +48,6 @@ public class TextEntryActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 }

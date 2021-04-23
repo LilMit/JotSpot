@@ -18,12 +18,14 @@ public class MainViewModel extends AndroidViewModel {
     private EntryRepository repository;
     private LiveData<List<Entry>> allEntries;
     private MutableLiveData<List<Entry>> searchResults;
+    private MutableLiveData<Entry> selectedEntry;
 
     public MainViewModel(Application application) {
         super(application);
         repository = new EntryRepository(application);
         allEntries = repository.getAllEntries();
         searchResults = repository.getSearchResults();
+        selectedEntry = repository.getSelectedEntry();
     }
 
     public LiveData<List<Entry>> getAllEntries() {
@@ -32,6 +34,9 @@ public class MainViewModel extends AndroidViewModel {
 
     public MutableLiveData<List<Entry>> getSearchResults() {
         return searchResults;
+    }
+    public MutableLiveData<Entry> getSelectedEntry() {
+        return selectedEntry;
     }
 
     public void insertEntry(Entry entry) {
