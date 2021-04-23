@@ -18,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentContainerView;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.io.File;
@@ -55,7 +57,7 @@ public class AudioEntryActivity extends AppCompatActivity {
     private Date startTime = null;
     private Date endTime = null;
 
-    private int mood =0;
+    Entry currentEntry;
 
     private boolean recordPermissionAccepted = false;
     private String[] permissions = {Manifest.permission.RECORD_AUDIO};
@@ -182,7 +184,7 @@ public class AudioEntryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         startTime = new Date(Instant.now().toEpochMilli());
-
+        currentEntry = new Entry(startTime, EntryType.AUDIO);
         String stamp = new SimpleDateFormat("MM-dd-yyyy_HHmmss").format(startTime);
         String storageDirectory = getApplicationContext().getFilesDir().getAbsolutePath();
         Log.e(LOG_TAG, "StorageDirectory =" + storageDirectory);
@@ -197,7 +199,14 @@ public class AudioEntryActivity extends AppCompatActivity {
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-
+        mainViewModel.setSelectedEntry(currentEntry);
+        mainViewModel.getSelectedEntry().observe(this, new
+                Observer<Entry>() {
+                    @Override
+                    public void onChanged(Entry entry) {
+                        currentEntry = entry;
+                    }
+                });
         LinearLayout vll = new LinearLayout(this);
         vll.setOrientation(LinearLayout.VERTICAL);
         LinearLayout ll = new LinearLayout(this);
@@ -226,8 +235,8 @@ public class AudioEntryActivity extends AppCompatActivity {
                     Toast.makeText(AudioEntryActivity.this, "Nothing to save", Toast.LENGTH_LONG).show();
                 } else {
                     String content = fileName;
-                    Entry entry = new Entry(startTime, EntryType.AUDIO, content);
-                    mainViewModel.insertEntry(entry);
+                    currentEntry.setContent(content);
+                    mainViewModel.insertEntry(currentEntry);
                     finish();
                 }
             }
@@ -239,10 +248,16 @@ public class AudioEntryActivity extends AppCompatActivity {
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
         vll.addView(ll);
-
+        FragmentContainerView moodBarContainerView = new FragmentContainerView(this);
+        moodBarContainerView.setId(R.id.moodbar_container_view);
+        vll.addView(moodBarContainerView);
         setContentView(vll);
-
-        // setContentView(R.layout.activity_audio_entry);
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(R.id.moodbar_container_view, MoodFragment.class, null)
+                    .commit();
+        }
     }
 
     @Override

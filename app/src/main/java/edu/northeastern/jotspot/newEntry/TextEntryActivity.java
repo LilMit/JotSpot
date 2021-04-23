@@ -41,11 +41,8 @@ public class TextEntryActivity extends AppCompatActivity {
         currentEntry = new Entry(date, EntryType.TEXT);
         Log.e(TAG, "currentEntry =" + currentEntry.toString());
 
-
-
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         mainViewModel.setSelectedEntry(currentEntry);
-
         mainViewModel.getSelectedEntry().observe(this, new
                 Observer<Entry>() {
                     @Override
@@ -68,11 +65,8 @@ public class TextEntryActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-
                 String content = contentEditText.getText().toString();
-
                 currentEntry.setContent(content);
-
                 mainViewModel.insertEntry(currentEntry);
                 Log.e(TAG, "saving entry "+ currentEntry.toString());
                 finish();

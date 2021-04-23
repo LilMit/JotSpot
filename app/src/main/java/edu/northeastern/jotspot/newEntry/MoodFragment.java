@@ -32,7 +32,6 @@ public class MoodFragment extends Fragment implements View.OnClickListener{
 
     private MainViewModel mainViewModel;
     private Entry currentEntry;
-    private int mood = 0;
 
     public MoodFragment() {
         // Required empty public constructor
@@ -104,35 +103,22 @@ public class MoodFragment extends Fragment implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.imageButton: {
                 currentEntry.setMood(1);
-                mood = 1;
-
             }
             case R.id.imageButton2: {
                 currentEntry.setMood(2);
-                mood = 2;
-
             }
             case R.id.imageButton3: {
                 currentEntry.setMood(3);
-                mood = 3;
-
             }
             case R.id.imageButton4: {
                 currentEntry.setMood(4);
-                mood = 4;
-
             }
             case R.id.imageButton5: {
                 currentEntry.setMood(5);
-                mood = 5;
-
             }
             mainViewModel.setSelectedEntry(currentEntry);
 
         }
     }
 
-    public int getMood(){
-        return this.mood;
-    }
 }
