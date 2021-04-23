@@ -133,11 +133,11 @@ public class NotificationService extends Service {
         Log.e(TAG, "sending Notification");
         String channelId = NOTIFICATION_CHANNEL;
         String replyLabel = "Write your entry here.";
+        notificationManager = (NotificationManager) context
+                .getSystemService(Context.NOTIFICATION_SERVICE);
 
         RemoteInput remoteInput = new RemoteInput.Builder(KEY_REMOTE_ENTRY).setLabel(replyLabel)
                 .build();
-
-        //TODO check usage of package contexts of intents, should it be "this" or something else?
 
         // set up intent for clicking main notification body to create new entry from type selection
         Intent openTypeSelectionIntent = new Intent(context, EntryTypeSelection.class);
