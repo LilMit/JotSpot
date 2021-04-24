@@ -124,11 +124,9 @@ public class ViewTextEntryActivity extends AppCompatActivity {
 
     public void setMood(int mood) {
         moodImageView.setVisibility(View.VISIBLE);
-        moodLabel.setVisibility(View.VISIBLE);
         switch(mood){
             case 0:
                 moodImageView.setVisibility(View.INVISIBLE);
-                moodLabel.setVisibility(View.INVISIBLE);
                 break;
             case 1:
                 moodImageView.setImageResource(R.drawable.ic_worst_face);
