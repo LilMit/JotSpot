@@ -176,7 +176,8 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
         preferencesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openPreferencesActivity();
+                Intent i = new Intent(MainFragment.this.getContext(), SettingsActivity.class);
+                startActivity(i);
             }
         });
 
@@ -265,15 +266,5 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
     private boolean calculateReward(int numEntries){
         int[] numbers = getResources().getIntArray(R.array.rewardNumbers);
         return binarySearch(numbers, numEntries)>=0;
-    }
-
-    public void openPreferencesActivity(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Intent i = new Intent(MainFragment.this.getContext(), SettingsActivity.class);
-                startActivity(i);
-            }
-        }).start();
     }
 }
