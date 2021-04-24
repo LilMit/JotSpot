@@ -159,6 +159,8 @@ public class ViewAudioEntryActivity extends AppCompatActivity {
 
         ImageView moodImage = new ImageView(this);
         switch(mood){
+            case 0:
+                moodImage.setVisibility(View.INVISIBLE);
             case 1:
                 moodImage.setImageResource(R.drawable.ic_worst_face);
                 break;

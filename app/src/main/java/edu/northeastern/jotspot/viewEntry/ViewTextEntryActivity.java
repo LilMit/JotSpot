@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,6 +30,8 @@ public class ViewTextEntryActivity extends AppCompatActivity {
     private Button deleteButton;
     private TextView date;
     private ImageView moodImageView;
+    private TextView moodLabel;
+    private Button editButton;
 
     private String id;
     private int mood;
@@ -43,6 +46,7 @@ public class ViewTextEntryActivity extends AppCompatActivity {
         deleteButton = findViewById(R.id.delete_text_button);
         date = findViewById(R.id.text_entry_date);
         moodImageView = findViewById(R.id.mood_image_text_view);
+        moodLabel = findViewById(R.id.moodLabelTextEntryView);
 
         Bundle extras = getIntent().getExtras();
         ArrayList<String> entryExtra = extras.getStringArrayList("ENTRY");
@@ -69,13 +73,22 @@ public class ViewTextEntryActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+//        editButton.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
         setMood(mood);
     }
 
     public void setMood(int mood) {
 
-        Log.e(TAG, "mood = " + mood);
         switch(mood){
+            case 0:
+                moodImageView.setVisibility(View.INVISIBLE);
+                moodLabel.setVisibility(View.INVISIBLE);
             case 1:
                 moodImageView.setImageResource(R.drawable.ic_worst_face);
                 break;

@@ -60,6 +60,8 @@ public class EntryListAdapter extends RecyclerView.Adapter<EntryListAdapter.View
         Entry item = entryList.get(listPosition);
         int mood = item.getMood();
         switch(mood){
+            case 0:
+                moodImageView.setVisibility(View.INVISIBLE);
             case 1:
                 moodImageView.setImageResource(R.drawable.ic_worst_face);
                 break;
