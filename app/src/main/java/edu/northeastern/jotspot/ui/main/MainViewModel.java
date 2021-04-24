@@ -45,6 +45,7 @@ public class MainViewModel extends AndroidViewModel {
 
     public void updateEntry(Entry entry) {
         repository.updateEntry(entry);
+        setSelectedEntry(entry);
     }
 
     public void findEntries(String date) {

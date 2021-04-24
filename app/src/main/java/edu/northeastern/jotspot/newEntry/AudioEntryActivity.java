@@ -274,4 +274,11 @@ public class AudioEntryActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed(){
+        File file = new File(fileName);
+        file.delete();
+        super.onBackPressed();
+    }
+
 }

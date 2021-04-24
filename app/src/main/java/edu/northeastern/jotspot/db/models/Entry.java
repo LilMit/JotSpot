@@ -47,6 +47,21 @@ public class Entry {
         this.mood = mood;
     }
 
+    public Entry(Integer id, Date date, EntryType type, String content, int mood) {
+        this.id = id;
+        this.date = date;
+        this.type = type;
+        this.content = content;
+        this.mood = mood;
+    }
+
+    public Entry(Integer id, Date date, EntryType type, String content) {
+        this.id = id;
+        this.date = date;
+        this.type = type;
+        this.content = content;
+    }
+
     public Integer getId() {
         return id;
     }

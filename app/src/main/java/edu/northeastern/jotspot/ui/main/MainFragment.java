@@ -252,7 +252,6 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
                 info.add(content);
                 info.add(String.valueOf(id));
                 info.add(mood);
-                Log.e(TAG, "info size: " + info.size());
                 intent.putStringArrayListExtra("ENTRY", info);
                 startActivity(intent);
             }

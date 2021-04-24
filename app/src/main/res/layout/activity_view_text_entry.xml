@@ -50,6 +50,14 @@
         android:textColor="#FFFFFF" />
 
     <Button
+        android:id="@+id/edit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="edit" />
+
+    <Button
         android:id="@+id/delete_text_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,5 +79,16 @@
             android:text="TextView"
             android:textSize="24sp" />
     </ScrollView>
+
+    <androidx.fragment.app.FragmentContainerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/edit_entry_container_view"
+        android:name="edu.northeastern.jotspot.viewEntry.EditEntryFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </RelativeLayout>
