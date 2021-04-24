@@ -97,7 +97,7 @@ public class ViewTextEntryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ViewTextEntryActivity.this.getSupportFragmentManager().beginTransaction()
                         .setReorderingAllowed(true)
-                        .add(R.id.edit_entry_container_view, EditEntryFragment.class, null)
+                        .replace(R.id.edit_entry_container_view, EditEntryFragment.class, null)
                         .commit();
             }
         });

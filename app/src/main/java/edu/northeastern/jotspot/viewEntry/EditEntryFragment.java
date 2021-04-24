@@ -85,11 +85,13 @@ public class EditEntryFragment extends Fragment {
 
     @Override
     public void onViewCreated(View v, Bundle savedInstanceState){
+        contentEditText = v.findViewById(R.id.edit_entry_content_text);
         mainViewModel.getSelectedEntry().observe(getViewLifecycleOwner(), new
                 Observer<Entry>() {
                     @Override
                     public void onChanged(Entry entry) {
                         currentEntry = entry;
+                        contentEditText.setText(currentEntry.getContent(), TextView.BufferType.EDITABLE);
                         Log.e(TAG, "currentEntry =" + entry.toString());
                     }
                 });
@@ -99,9 +101,11 @@ public class EditEntryFragment extends Fragment {
                     .add(R.id.moodbar_container_view, MoodFragment.class, null)
                     .commit();
         }
-        contentEditText = v.findViewById(R.id.edit_entry_content_text);
+
         saveButton = v.findViewById(R.id.edit_save_button);
-        contentEditText.setText(currentEntry.getContent());
+
+        Log.e(TAG, "text= " + contentEditText.getText().toString());
+        Log.e(TAG, "Content = " + currentEntry.getContent());
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,4 +117,6 @@ public class EditEntryFragment extends Fragment {
             }
         });
     }
+
+
 }
