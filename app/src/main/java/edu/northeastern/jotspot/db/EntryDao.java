@@ -25,7 +25,7 @@ public interface EntryDao {
     List<Entry> findEntries(Date inputDate, Date nextDay);
 
     @Query("SELECT * FROM entries WHERE entryId== :id LIMIT 1")
-    Entry findEntry(int id);
+    Entry findEntry(Integer id);
 
     @Insert
     void addEntry(Entry entry);
@@ -34,6 +34,6 @@ public interface EntryDao {
     void updateEntry(Entry entry);
 
     @Query("DELETE from entries WHERE entryId = :id")
-    void deleteEntry(int id);
+    void deleteEntry(Integer id);
 
 }

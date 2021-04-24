@@ -13,7 +13,7 @@ public class Entry {
     @PrimaryKey(autoGenerate = true)
     @NonNull
     @ColumnInfo(name= "entryId")
-    private int id;
+    private Integer id;
 
     @ColumnInfo(name = "dateCreated")
     private Date date;
@@ -30,7 +30,6 @@ public class Entry {
     public Entry(){}
 
     public Entry(Date date, EntryType type) {
-        this.id = id;
         this.date = date;
         this.type = type;
     }
@@ -48,11 +47,11 @@ public class Entry {
         this.mood = mood;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(@NonNull int id) {
+    public void setId(@NonNull Integer id) {
         this.id = id;
     }
 

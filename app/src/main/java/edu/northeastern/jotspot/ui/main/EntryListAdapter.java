@@ -1,12 +1,15 @@
 package edu.northeastern.jotspot.ui.main;
 
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -53,7 +56,26 @@ public class EntryListAdapter extends RecyclerView.Adapter<EntryListAdapter.View
     public void onBindViewHolder(final ViewHolder holder, final int listPosition) {
         TextView date = holder.timestamp;
         TextView content = holder.content;
+        ImageView moodImageView = holder.moodImageView;
         Entry item = entryList.get(listPosition);
+        int mood = item.getMood();
+        switch(mood){
+            case 1:
+                moodImageView.setImageResource(R.drawable.ic_worst_face);
+                break;
+            case 2:
+                moodImageView.setImageResource(R.drawable.ic_bad_face);
+                break;
+            case 3:
+                moodImageView.setImageResource(R.drawable.ic_meh_face);
+                break;
+            case 4:
+                moodImageView.setImageResource(R.drawable.ic_satisfied_face);
+                break;
+            case 5:
+                moodImageView.setImageResource(R.drawable.ic_happy_face);
+                break;
+        }
         EntryType type = item.getType();
         if (type.equals(EntryType.TEXT)) {
             content.setText(item.getContent());
@@ -66,11 +88,13 @@ public class EntryListAdapter extends RecyclerView.Adapter<EntryListAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView timestamp;
         TextView content;
+        ImageView moodImageView;
 
         public ViewHolder(View itemView, final ItemClickListener listener) {
             super(itemView);
             timestamp = itemView.findViewById(R.id.entry_timestamp);
             content = itemView.findViewById(R.id.content_text);
+            moodImageView = itemView.findViewById(R.id.cardMoodImage);
 
             itemView.setOnClickListener(new View.OnClickListener() {
 

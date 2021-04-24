@@ -103,22 +103,26 @@ public class MoodFragment extends Fragment implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.imageButton: {
                 currentEntry.setMood(1);
+                break;
             }
             case R.id.imageButton2: {
                 currentEntry.setMood(2);
+                break;
             }
             case R.id.imageButton3: {
                 currentEntry.setMood(3);
+                break;
             }
             case R.id.imageButton4: {
                 currentEntry.setMood(4);
+                break;
             }
             case R.id.imageButton5: {
                 currentEntry.setMood(5);
+                break;
             }
-            mainViewModel.setSelectedEntry(currentEntry);
-
         }
+        mainViewModel.setSelectedEntry(currentEntry);
     }
 
 }

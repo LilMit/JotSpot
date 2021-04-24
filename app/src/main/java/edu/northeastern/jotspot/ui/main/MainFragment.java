@@ -36,6 +36,7 @@ import edu.northeastern.jotspot.EntryTypeSelection;
 import edu.northeastern.jotspot.R;
 import edu.northeastern.jotspot.db.models.Entry;
 import edu.northeastern.jotspot.db.models.EntryType;
+import edu.northeastern.jotspot.newEntry.AudioEntryActivity;
 import edu.northeastern.jotspot.settings.SettingsActivity;
 import edu.northeastern.jotspot.viewEntry.ViewAudioEntryActivity;
 import edu.northeastern.jotspot.viewEntry.ViewTextEntryActivity;
@@ -175,8 +176,7 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
         preferencesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainFragment.this.getContext(), SettingsActivity.class);
-                startActivity(i);
+                openPreferencesActivity();
             }
         });
 
@@ -232,6 +232,8 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
         ItemClickListener itemClickListener = new ItemClickListener() {
             @Override
             public void onItemClick(Entry item) {
+                mainViewModel.setSelectedEntry(item);
+                Log.e(TAG, "selected item is now " + item);
                 int id = item.getId();
                 EntryType type = item.getType();
                 String content = item.getContent();
@@ -248,6 +250,7 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
                 info.add(date);
                 info.add(content);
                 info.add(String.valueOf(id));
+                info.add(String.valueOf(item.getMood()));
                 intent.putStringArrayListExtra("ENTRY", info);
                 startActivity(intent);
             }
@@ -261,5 +264,15 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
     private boolean calculateReward(int numEntries){
         int[] numbers = getResources().getIntArray(R.array.rewardNumbers);
         return binarySearch(numbers, numEntries)>=0;
+    }
+
+    public void openPreferencesActivity(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Intent i = new Intent(MainFragment.this.getContext(), SettingsActivity.class);
+                startActivity(i);
+            }
+        }).start();
     }
 }

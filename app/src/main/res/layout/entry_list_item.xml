@@ -38,6 +38,12 @@
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="italic" />
+
+        <ImageView
+            android:id="@+id/cardMoodImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            card_view:srcCompat="?android:attr/listChoiceIndicatorSingle" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

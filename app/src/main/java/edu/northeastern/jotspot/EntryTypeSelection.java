@@ -34,11 +34,20 @@ public class EntryTypeSelection extends AppCompatActivity {
         audioEntryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(EntryTypeSelection.this, AudioEntryActivity.class);
-                startActivity(i);
+                openAudioEntryActivity();
                 finish();
             }
         });
 
+    }
+
+    public void openAudioEntryActivity(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Intent i = new Intent(EntryTypeSelection.this, AudioEntryActivity.class);
+                startActivity(i);;
+            }
+        }).start();
     }
 }

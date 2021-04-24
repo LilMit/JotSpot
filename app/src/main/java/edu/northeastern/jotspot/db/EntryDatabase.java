@@ -12,7 +12,7 @@ import edu.northeastern.jotspot.db.models.Entry;
 /**
  * This was created by following Chapter 66 of Android Studio 4.1 Development Essentials
  */
-@Database(entities = {Entry.class}, version=5)
+@Database(entities = {Entry.class}, version=6)
 @TypeConverters({Converters.class})
 public abstract class EntryDatabase extends RoomDatabase {
     public abstract EntryDao entryDao();
