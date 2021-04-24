@@ -19,19 +19,28 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="@tools:sample/date/ddmmyy" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/edit_save_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="save"
-        android:textColor="@color/darkteal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/edit_cancel_button"
         app:layout_constraintTop_toBottomOf="@id/edit_entry_input_layout" />
 
+
+    <Button
+        android:id="@+id/edit_cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="cancel"
+        app:layout_constraintEnd_toStartOf="@+id/edit_save_button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_entry_input_layout" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edit_entry_input_layout"

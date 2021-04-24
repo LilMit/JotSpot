@@ -237,7 +237,7 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
                 int id = item.getId();
                 EntryType type = item.getType();
                 String content = item.getContent();
-                String date = item.getDate().toString();
+                String date = String.valueOf(item.getDate().getTime());
                 String mood = String.valueOf(item.getMood());
                 Intent intent;
                 if (type == EntryType.TEXT) {

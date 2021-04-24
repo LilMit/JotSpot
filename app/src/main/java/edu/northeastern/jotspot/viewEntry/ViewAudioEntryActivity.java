@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import edu.northeastern.jotspot.R;
@@ -101,6 +102,9 @@ public class ViewAudioEntryActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         ArrayList<String> entry = extras.getStringArrayList("ENTRY");
         startTime = entry.get(0);
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy HH:mm");
+        String dateText = format.format(Long.valueOf(startTime));
+
         fileName = entry.get(1);
         id = entry.get(2);
         mood = Integer.parseInt(entry.get(3));
@@ -109,7 +113,7 @@ public class ViewAudioEntryActivity extends AppCompatActivity {
         vll.setOrientation(LinearLayout.VERTICAL);
 
         timestamp = new TextView(this);
-        timestamp.setText(startTime);
+        timestamp.setText(dateText);
         timestamp.setTextSize(24);
         vll.addView(timestamp,
                 new LinearLayout.LayoutParams(

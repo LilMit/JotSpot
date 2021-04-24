@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+
 import edu.northeastern.jotspot.R;
 import edu.northeastern.jotspot.db.models.Entry;
 import edu.northeastern.jotspot.newEntry.MoodFragment;
@@ -40,6 +42,7 @@ public class EditEntryFragment extends Fragment {
     private String mParam2;
     private EditText contentEditText;
     private Button saveButton;
+    private Button cancelButton;
     private TextView entryDate;
 
     public EditEntryFragment() {
@@ -79,8 +82,6 @@ public class EditEntryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-
         return inflater.inflate(R.layout.fragment_edit_entry, container, false);
     }
 
@@ -94,12 +95,15 @@ public class EditEntryFragment extends Fragment {
                     public void onChanged(Entry entry) {
                         currentEntry = entry;
                         contentEditText.setText(currentEntry.getContent(), TextView.BufferType.EDITABLE);
-                        entryDate.setText(currentEntry.getDate().toString());
+                        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy HH:mm");
+                        String dateText = format.format(currentEntry.getDate().getTime());
+                        entryDate.setText(dateText);
                         Log.e(TAG, "currentEntry =" + entry.toString());
                     }
                 });
 
         saveButton = v.findViewById(R.id.edit_save_button);
+        cancelButton = v.findViewById(R.id.edit_cancel_button);
 
         Log.e(TAG, "text= " + contentEditText.getText().toString());
         Log.e(TAG, "Content = " + currentEntry.getContent());
@@ -113,6 +117,13 @@ public class EditEntryFragment extends Fragment {
                 getActivity().getSupportFragmentManager().beginTransaction().remove(EditEntryFragment.this).commit();
             }
         });
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction().remove(EditEntryFragment.this).commit();
+            }
+        });
+
     }
 
 

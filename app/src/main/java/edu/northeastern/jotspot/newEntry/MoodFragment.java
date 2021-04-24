@@ -68,7 +68,6 @@ public class MoodFragment extends Fragment implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
         currentEntry = new Entry();
-        Log.e(TAG, "currentEntry =" + currentEntry.toString());
     }
 
     @Override
@@ -137,7 +136,11 @@ public class MoodFragment extends Fragment implements View.OnClickListener{
                 break;
             }
         }
-        mainViewModel.updateEntry(currentEntry);
+        if (currentEntry.getId() != null) {
+            mainViewModel.updateEntry(currentEntry);
+        } else {
+            mainViewModel.setSelectedEntry(currentEntry);
+        }
     }
 
     private void deselectAll(){

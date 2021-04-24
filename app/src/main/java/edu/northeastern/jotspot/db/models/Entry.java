@@ -6,6 +6,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 @Entity(tableName = "entries")
 public class Entry {
@@ -104,6 +105,8 @@ public class Entry {
 
     @Override
     public String toString(){
-        return type + " entry " + id + ": date: " + date + ", mood: " + mood;
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
+        String formattedDate = format.format(date);
+        return type + " entry " + id + ": date: " + formattedDate + ", mood: " + mood;
     }
 }

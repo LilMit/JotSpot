@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import edu.northeastern.jotspot.R;
@@ -84,7 +85,9 @@ public class EntryListAdapter extends RecyclerView.Adapter<EntryListAdapter.View
         } else {
             content.setText(item.getType().toString());
         }
-        date.setText(item.getDate().toString());
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy HH:mm");
+        String dateText = format.format(item.getDate().getTime());
+        date.setText(dateText);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

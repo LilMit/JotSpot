@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import edu.northeastern.jotspot.R;
@@ -56,8 +57,11 @@ public class ViewTextEntryActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         ArrayList<String> entryExtra = extras.getStringArrayList("ENTRY");
-        currentEntry = new Entry(Integer.parseInt(entryExtra.get(2)), Date.valueOf(entryExtra.get(0)), EntryType.TEXT, entryExtra.get(1),Integer.parseInt(entryExtra.get(3)));
-        date.setText(currentEntry.getDate().toString());
+        Long time = Long.valueOf(entryExtra.get(0));
+        currentEntry = new Entry(Integer.parseInt(entryExtra.get(2)), new Date(time), EntryType.TEXT, entryExtra.get(1),Integer.parseInt(entryExtra.get(3)));
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy HH:mm");
+        String dateText = format.format(time);
+        date.setText(dateText);
         content.setText(currentEntry.getContent());
         id = currentEntry.getId().toString();
         setMood(currentEntry.getMood());
