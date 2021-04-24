@@ -49,18 +49,10 @@ public class ViewTextEntryActivity extends AppCompatActivity {
         date.setText(entryExtra.get(0));
         content.setText(entryExtra.get(1));
         id = entryExtra.get(2);
-        mood = Integer.getInteger(entryExtra.get(3));
+        mood = Integer.parseInt(entryExtra.get(3));
 
 
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-//        mainViewModel.getSelectedEntry().observe(this, new
-//                Observer<Entry>() {
-//                    @Override
-//                    public void onChanged(Entry entry) {
-//                        currentEntry = entry;
-//                        Log.e("TAG", "entry =" + currentEntry);
-//                    }
-//                });
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -78,8 +70,6 @@ public class ViewTextEntryActivity extends AppCompatActivity {
             }
         });
         setMood(mood);
-
-
     }
 
     public void setMood(int mood) {

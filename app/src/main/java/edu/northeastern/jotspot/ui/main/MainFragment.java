@@ -238,6 +238,7 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
                 EntryType type = item.getType();
                 String content = item.getContent();
                 String date = item.getDate().toString();
+                String mood = String.valueOf(item.getMood());
                 Intent intent;
                 if (type == EntryType.TEXT) {
                     intent = new Intent(MainFragment.this.getContext(),
@@ -250,7 +251,8 @@ public class MainFragment extends Fragment implements DatePickerDialog.OnDateSet
                 info.add(date);
                 info.add(content);
                 info.add(String.valueOf(id));
-                info.add(String.valueOf(item.getMood()));
+                info.add(mood);
+                Log.e(TAG, "info size: " + info.size());
                 intent.putStringArrayListExtra("ENTRY", info);
                 startActivity(intent);
             }

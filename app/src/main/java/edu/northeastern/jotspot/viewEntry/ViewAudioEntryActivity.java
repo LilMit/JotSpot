@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import edu.northeastern.jotspot.R;
 import edu.northeastern.jotspot.ui.main.MainViewModel;
 
 /**
@@ -41,6 +43,7 @@ public class ViewAudioEntryActivity extends AppCompatActivity {
     private String startTime = null;
     private TextView timestamp = null;
     private String id;
+    private int mood;
 
     private void onPlay(boolean start) {
         if (start) {
@@ -100,6 +103,7 @@ public class ViewAudioEntryActivity extends AppCompatActivity {
         startTime = entry.get(0);
         fileName = entry.get(1);
         id = entry.get(2);
+        mood = Integer.parseInt(entry.get(3));
 
         LinearLayout vll = new LinearLayout(this);
         vll.setOrientation(LinearLayout.VERTICAL);
@@ -152,6 +156,26 @@ public class ViewAudioEntryActivity extends AppCompatActivity {
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
         vll.addView(ll);
+
+        ImageView moodImage = new ImageView(this);
+        switch(mood){
+            case 1:
+                moodImage.setImageResource(R.drawable.ic_worst_face);
+                break;
+            case 2:
+                moodImage.setImageResource(R.drawable.ic_bad_face);
+                break;
+            case 3:
+                moodImage.setImageResource(R.drawable.ic_meh_face);
+                break;
+            case 4:
+                moodImage.setImageResource(R.drawable.ic_satisfied_face);
+                break;
+            case 5:
+                moodImage.setImageResource(R.drawable.ic_happy_face);
+                break;
+        }
+        vll.addView(moodImage);
         setContentView(vll);
     }
 
