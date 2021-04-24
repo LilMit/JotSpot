@@ -40,6 +40,7 @@ public class EditEntryFragment extends Fragment {
     private String mParam2;
     private EditText contentEditText;
     private Button saveButton;
+    private TextView entryDate;
 
     public EditEntryFragment() {
         // Required empty public constructor
@@ -86,21 +87,17 @@ public class EditEntryFragment extends Fragment {
     @Override
     public void onViewCreated(View v, Bundle savedInstanceState){
         contentEditText = v.findViewById(R.id.edit_entry_content_text);
+        entryDate = v.findViewById(R.id.edit_text_entry_date);
         mainViewModel.getSelectedEntry().observe(getViewLifecycleOwner(), new
                 Observer<Entry>() {
                     @Override
                     public void onChanged(Entry entry) {
                         currentEntry = entry;
                         contentEditText.setText(currentEntry.getContent(), TextView.BufferType.EDITABLE);
+                        entryDate.setText(currentEntry.getDate().toString());
                         Log.e(TAG, "currentEntry =" + entry.toString());
                     }
                 });
-        if (savedInstanceState == null) {
-            getChildFragmentManager().beginTransaction()
-                    .setReorderingAllowed(true)
-                    .add(R.id.moodbar_container_view, MoodFragment.class, null)
-                    .commit();
-        }
 
         saveButton = v.findViewById(R.id.edit_save_button);
 
@@ -113,7 +110,7 @@ public class EditEntryFragment extends Fragment {
                 currentEntry.setContent(content);
                 mainViewModel.updateEntry(currentEntry);
                 Log.e(TAG, "saving entry "+ currentEntry.toString());
-                getActivity().getSupportFragmentManager().popBackStack();
+                getActivity().getSupportFragmentManager().beginTransaction().remove(EditEntryFragment.this).commit();
             }
         });
     }

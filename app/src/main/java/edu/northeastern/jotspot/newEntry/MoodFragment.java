@@ -137,7 +137,7 @@ public class MoodFragment extends Fragment implements View.OnClickListener{
                 break;
             }
         }
-        mainViewModel.setSelectedEntry(currentEntry);
+        mainViewModel.updateEntry(currentEntry);
     }
 
     private void deselectAll(){

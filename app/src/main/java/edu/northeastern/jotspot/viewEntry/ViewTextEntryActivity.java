@@ -5,13 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -34,7 +33,8 @@ public class ViewTextEntryActivity extends AppCompatActivity {
     private TextView date;
     private ImageView moodImageView;
     private TextView moodLabel;
-    private Button editButton;
+    private ImageButton editEntryTextButton;
+    private ImageButton editEntryMoodButton;
     private Entry currentEntry;
 
     private String id;
@@ -47,7 +47,9 @@ public class ViewTextEntryActivity extends AppCompatActivity {
         content = findViewById(R.id.entry_text);
         backButton = findViewById(R.id.back_button);
         deleteButton = findViewById(R.id.delete_text_button);
-        editButton = findViewById(R.id.edit_button);
+        editEntryTextButton = findViewById(R.id.edit_text_button);
+        editEntryMoodButton = findViewById(R.id.edit_mood_button);
+
         date = findViewById(R.id.text_entry_date);
         moodImageView = findViewById(R.id.mood_image_text_view);
         moodLabel = findViewById(R.id.moodLabelTextEntryView);
@@ -92,12 +94,22 @@ public class ViewTextEntryActivity extends AppCompatActivity {
             }
         });
 
-        editButton.setOnClickListener(new View.OnClickListener(){
+        editEntryTextButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 ViewTextEntryActivity.this.getSupportFragmentManager().beginTransaction()
                         .setReorderingAllowed(true)
                         .replace(R.id.edit_entry_container_view, EditEntryFragment.class, null)
+                        .commit();
+            }
+        });
+
+        editEntryMoodButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                ViewTextEntryActivity.this.getSupportFragmentManager().beginTransaction()
+                        .setReorderingAllowed(true)
+                        .replace(R.id.edit_mood_entry_container_view, MoodFragment.class, null)
                         .commit();
             }
         });
