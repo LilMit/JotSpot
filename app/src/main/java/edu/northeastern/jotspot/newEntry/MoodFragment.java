@@ -1,5 +1,6 @@
 package edu.northeastern.jotspot.newEntry;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -25,6 +26,7 @@ import edu.northeastern.jotspot.ui.main.MainViewModel;
 public class MoodFragment extends Fragment implements View.OnClickListener{
 
     private static final String TAG = "MoodFragment";
+    private static final int SELECTED_COLOR = R.color.pale;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -32,6 +34,12 @@ public class MoodFragment extends Fragment implements View.OnClickListener{
 
     private MainViewModel mainViewModel;
     private Entry currentEntry;
+
+    ImageButton terribleButton;
+    ImageButton badButton;
+    ImageButton mehButton;
+    ImageButton goodButton;
+    ImageButton bestButton;
 
     public MoodFragment() {
         // Required empty public constructor
@@ -86,11 +94,11 @@ public class MoodFragment extends Fragment implements View.OnClickListener{
 
     private void listenerSetup(View v) {
 
-        ImageButton terribleButton = v.findViewById(R.id.imageButton);
-        ImageButton badButton = v.findViewById(R.id.imageButton2);
-        ImageButton mehButton = v.findViewById(R.id.imageButton3);
-        ImageButton goodButton = v.findViewById(R.id.imageButton4);
-        ImageButton bestButton = v.findViewById(R.id.imageButton5);
+        terribleButton = v.findViewById(R.id.imageButton);
+        badButton = v.findViewById(R.id.imageButton2);
+        mehButton = v.findViewById(R.id.imageButton3);
+        goodButton = v.findViewById(R.id.imageButton4);
+        bestButton = v.findViewById(R.id.imageButton5);
         terribleButton.setOnClickListener(this);
         badButton.setOnClickListener(this);
         mehButton.setOnClickListener(this);
@@ -100,29 +108,44 @@ public class MoodFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+        int color = getResources().getColor(SELECTED_COLOR);
+        deselectAll();
         switch (v.getId()) {
             case R.id.imageButton: {
                 currentEntry.setMood(1);
+                v.setBackgroundColor(color);
                 break;
             }
             case R.id.imageButton2: {
                 currentEntry.setMood(2);
+                v.setBackgroundColor(color);
                 break;
             }
             case R.id.imageButton3: {
                 currentEntry.setMood(3);
+                v.setBackgroundColor(color);
                 break;
             }
             case R.id.imageButton4: {
                 currentEntry.setMood(4);
+                v.setBackgroundColor(color);
                 break;
             }
             case R.id.imageButton5: {
                 currentEntry.setMood(5);
+                v.setBackgroundColor(color);
                 break;
             }
         }
         mainViewModel.setSelectedEntry(currentEntry);
+    }
+
+    private void deselectAll(){
+        terribleButton.setBackgroundColor(Color.TRANSPARENT);
+        badButton.setBackgroundColor(Color.TRANSPARENT);
+        mehButton.setBackgroundColor(Color.TRANSPARENT);
+        goodButton.setBackgroundColor(Color.TRANSPARENT);
+        bestButton.setBackgroundColor(Color.TRANSPARENT);
     }
 
 }
