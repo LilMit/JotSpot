@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import edu.northeastern.jotspot.R;
 import edu.northeastern.jotspot.db.models.Entry;
@@ -35,7 +36,7 @@ public class EditEntryFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = "EditEntry";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String TEXT_KEY = "TEXT_KEY";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -62,7 +63,7 @@ public class EditEntryFragment extends Fragment {
         EditEntryFragment fragment = new EditEntryFragment();
         Bundle args = new Bundle();
         args.putString(TAG, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(TEXT_KEY, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,7 +75,7 @@ public class EditEntryFragment extends Fragment {
         currentEntry = new Entry();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(TAG);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam2 = getArguments().getString(TEXT_KEY);
         }
     }
 
@@ -125,6 +126,17 @@ public class EditEntryFragment extends Fragment {
         });
 
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        ArrayList<String> text = new ArrayList<>();
+        text.add((String) contentEditText.getText().toString());
+        text.add((String) entryDate.getText());
+        outState.putStringArrayList(TEXT_KEY, text);
+
+        super.onSaveInstanceState(outState);
+    }
+
 
 
 }

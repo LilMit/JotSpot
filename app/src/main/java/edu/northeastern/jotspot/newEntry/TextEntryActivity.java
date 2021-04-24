@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import java.sql.Date;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.northeastern.jotspot.R;
@@ -26,7 +27,9 @@ import edu.northeastern.jotspot.ui.main.MainViewModel;
 public class TextEntryActivity extends AppCompatActivity {
 
     private static String TAG = "TextActivity";
+    private static String TEXT_KEY = "TEXT_KEY";
     private TextView contentEditText;
+    private TextView entryDate;
     private Button saveButton;
     private Entry currentEntry;
 
@@ -39,6 +42,7 @@ public class TextEntryActivity extends AppCompatActivity {
 
         Date date = new Date(Instant.now().toEpochMilli());
         currentEntry = new Entry(date, EntryType.TEXT);
+
         Log.e(TAG, "currentEntry =" + currentEntry.toString());
 
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
@@ -53,6 +57,7 @@ public class TextEntryActivity extends AppCompatActivity {
                 });
 
         contentEditText = findViewById(R.id.text_entry_edit_text);
+        entryDate = findViewById(R.id.new_text_entry_date);
         saveButton = findViewById(R.id.save_button);
 
         if (savedInstanceState == null) {
@@ -73,6 +78,23 @@ public class TextEntryActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        ArrayList<String> text = savedInstanceState.getStringArrayList(TEXT_KEY);
+        contentEditText.setText(text.get(0));
+        entryDate.setText(text.get(1));
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        ArrayList<String> text = new ArrayList<>();
+        text.add((String) contentEditText.getText().toString());
+        text.add((String) entryDate.getText());
+        outState.putStringArrayList(TEXT_KEY, text);
+
+        super.onSaveInstanceState(outState);
     }
 
 }

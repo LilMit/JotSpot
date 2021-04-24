@@ -39,6 +39,7 @@ public class ViewTextEntryActivity extends AppCompatActivity {
     private Entry currentEntry;
 
     private String id;
+    private SimpleDateFormat format;
     private MainViewModel mainViewModel;
 
     @Override
@@ -59,7 +60,7 @@ public class ViewTextEntryActivity extends AppCompatActivity {
         ArrayList<String> entryExtra = extras.getStringArrayList("ENTRY");
         Long time = Long.valueOf(entryExtra.get(0));
         currentEntry = new Entry(Integer.parseInt(entryExtra.get(2)), new Date(time), EntryType.TEXT, entryExtra.get(1),Integer.parseInt(entryExtra.get(3)));
-        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy HH:mm");
+        format = new SimpleDateFormat("MM-dd-yyyy HH:mm");
         String dateText = format.format(time);
         date.setText(dateText);
         content.setText(currentEntry.getContent());
@@ -74,7 +75,7 @@ public class ViewTextEntryActivity extends AppCompatActivity {
                     @Override
                     public void onChanged(Entry entry) {
                         currentEntry = entry;
-                        date.setText(currentEntry.getDate().toString());
+                        date.setText(format.format(currentEntry.getDate().getTime()));
                         content.setText(currentEntry.getContent());
                         setMood(currentEntry.getMood());
                         Log.e(TAG, "currentEntry =" + entry.toString());

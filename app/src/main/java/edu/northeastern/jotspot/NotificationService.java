@@ -59,13 +59,15 @@ public class NotificationService extends Service {
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         createNotificationChannel(NOTIFICATION_CHANNEL, "JotSpot Reminders",
                 "JotSpot Reminder Channel");
+
+        // cancel already scheduled reminders
+        cancelReminder(context, AlarmReceiver.class);
         AlarmManager alarmMgr;
         PendingIntent alarmIntent;
 
         alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmReceiver.class);
-        // cancel already scheduled reminders
-        cancelReminder(context, AlarmReceiver.class);
+
         alarmIntent = PendingIntent.getBroadcast(context, ALARM_REQUEST_CODE, intent, 0);
 
 // Set the alarm to start at hour, min
