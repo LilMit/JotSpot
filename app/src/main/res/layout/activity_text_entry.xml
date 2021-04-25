@@ -47,9 +47,13 @@
         android:id="@+id/text_entry_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:hintTextColor="@color/darkteal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/new_text_entry_date">
+        app:layout_constraintTop_toBottomOf="@id/new_text_entry_date"
+        app:placeholderTextColor="@color/darkteal"
+        app:prefixTextColor="@color/darkteal"
+        app:suffixTextColor="@color/darkteal">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/text_entry_edit_text"
