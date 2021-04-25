@@ -3,6 +3,7 @@ package edu.northeastern.jotspot.newEntry;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Build;
@@ -162,11 +163,11 @@ public class AudioEntryActivity extends AppCompatActivity {
         OnClickListener clicker = new OnClickListener() {
             @Override
             public void onClick(View v) {
-                onPlay(!mStartPlaying);
+                onPlay(mStartPlaying);
                 if (mStartPlaying) {
-                    setText("Play");
-                } else {
                     setText("Pause");
+                } else {
+                    setText("Play");
                 }
                 mStartPlaying = !mStartPlaying;
             }
@@ -182,6 +183,7 @@ public class AudioEntryActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //int buttonColor = getResources().getColor(R.color.teal);
         super.onCreate(savedInstanceState);
         startTime = new Date(Instant.now().toEpochMilli());
         currentEntry = new Entry(startTime, EntryType.AUDIO);
@@ -220,6 +222,7 @@ public class AudioEntryActivity extends AppCompatActivity {
 
         playButton = new PlayButton(this);
         playButton.setEnabled(false);
+        //playButton.setBackgroundColor(buttonColor);
         ll.addView(playButton,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
